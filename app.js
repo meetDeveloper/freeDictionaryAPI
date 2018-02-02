@@ -39,11 +39,8 @@ app.get("/", function(req, res){
          res.header("Content-Type",'application/json');
           res.send(JSON.stringify(definition, null, 4));
  
-         //console.log(definition);
-         
-   
-});
-res.send
+              //console.log(definition);
+     });
 });
 
 
