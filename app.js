@@ -2,6 +2,7 @@ var app = require("express")();
 var cheerio = require("cheerio");
 var request = require('request');
 var path    = require("path");
+var fs = require('fs');
 
 
 
@@ -11,11 +12,11 @@ app.get("/", function(req, res){
        res.sendFile(path.join(__dirname+'/welcome.html'));
    }
    else{
-       request({
+        request({
         method: 'GET',
         url: 'https://www.google.co.in/search?q=define+' + req.query.define,
         headers: {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0"
         }
     }, function(err, response, body) {
         
@@ -25,6 +26,7 @@ app.get("/", function(req, res){
         
         var definition = {};
     
+            
         var $ = cheerio.load(body);
         
              
