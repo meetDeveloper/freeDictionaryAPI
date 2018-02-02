@@ -13,7 +13,7 @@ app.get("/", function(req, res){
    else{
        request({
         method: 'GET',
-        url: 'https://www.google.co.in/search?q=define+' + req.query.word,
+        url: 'https://www.google.co.in/search?q=define+' + req.query.define,
         headers: {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
         }
@@ -28,7 +28,7 @@ app.get("/", function(req, res){
         var $ = cheerio.load(body);
         
              
-             definition.word = req.query.word;
+             definition.word = req.query.define;
              
              var mainPart = $(".lr_dct_sf_h");
              
