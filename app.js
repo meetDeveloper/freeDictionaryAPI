@@ -28,7 +28,7 @@ app.get("/", function(req, res){
         var $ = cheerio.load(body);
         
              
-             definition.name = req.query.word;
+             definition.word = req.query.word;
              
              var mainPart = $(".lr_dct_sf_h");
              
