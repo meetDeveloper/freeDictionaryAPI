@@ -7,7 +7,7 @@ var path    = require("path");
 
 app.get("/", function(req, res){
     
-   if(!req.query.word){
+   if(!req.query.define){
        res.sendFile(path.join(__dirname+'/welcome.html'));
    }
    else{
@@ -35,7 +35,7 @@ app.get("/", function(req, res){
              mainPart.each(function(i, element){
                  var type = $(this).text();
                  definition[type] = [];
-                 var selector = $(".lr_dct_sf_sens").find("div[style='margin-left:20px'] > ._Jig:nth-of-type(1) > div[style='display:inline']");
+                 var selector = $(".lr_dct_sf_sens").eq(i).find("div[style='margin-left:20px'] > ._Jig:nth-of-type(1) > div[style='display:inline']");
                  selector.each(function(i, element){
                     definition[type].push($(this).text()); 
                  });
