@@ -28,7 +28,7 @@ app.get("/", function(req, res){
     
             
         var $ = cheerio.load(body);
-        
+        //console.log(body);
              
              definition.word = req.query.define;
              
@@ -37,14 +37,21 @@ app.get("/", function(req, res){
              mainPart.each(function(i, element){
                  var type = $(this).text();
                  definition[type] = [];
-                 var selector = $(".lr_dct_sf_sens").eq(i).find("div[style='margin-left:20px'] > ._Jig:nth-of-type(1) > div[style='display:inline']");
+                 var selector = $(".lr_dct_sf_sens").eq(i).find("div[style='margin-left:20px'] > .PNlCoe > div[data-dobid='dfn']");
+                 //console.log(selector.length);
                  selector.each(function(i, element){
-                    definition[type].push($(this).text()); 
+                    var newDefinition = {};
+                    newDefinition.definition = $(this).text();
+                    var example = $(this).next().text();
+                    newDefinition.example = example.substring(1, example.length - 1);
+                    
+                    definition[type].push(newDefinition); 
                  });
-                 //console.log(selector.text());
+                 //console.log(definition);
              }) ;   
              
-             res.header("Content-Type",'application/json');
+              res.header("Content-Type",'application/json');
+              res.header("Access-Control-Allow-Origin", "*");
               res.send(JSON.stringify(definition, null, 4));
      
                   //console.log(definition);
