@@ -38,12 +38,14 @@ app.get("/", function(req, res){
              mainPart.each(function(i, element){
                  var type = $(this).text();
                  definition[type] = [];
-                 var selector = $(".lr_dct_sf_sens").eq(i).find("div[style='margin-left:20px'] > .PNlCoe > div[data-dobid='dfn']");
+                 var selector = $(".lr_dct_sf_sens").eq(i).find("div[style='margin-left:20px'] > .PNlCoe");
                  //console.log(selector.length);
                  selector.each(function(i, element){
+
                     var newDefinition = {};
-                    newDefinition.definition = $(this).text();
-                    var example = $(this).next().text();
+                    newDefinition.definition = $(this).find("div[data-dobid='dfn']").text();
+                    var example = $(this).find("span.vmod .vk_gy").text();
+
                     newDefinition.example = example.substring(1, example.length - 1);
                     
                     definition[type].push(newDefinition); 
