@@ -32,7 +32,8 @@ app.get("/", function(req, res){
              
              definition.word = req.query.define;
              
-             var mainPart = $(".lr_dct_sf_h");
+             var definitions = $(".lr_dct_ent.vmod.XpoqFe");
+             var mainPart = definitions.first().find(".lr_dct_sf_h");
              
              mainPart.each(function(i, element){
                  var type = $(this).text();
