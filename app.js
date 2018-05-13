@@ -28,8 +28,7 @@ app.get("/", function(req, res){
     
             
         var $ = cheerio.load(body);
-        //console.log(body);
-             
+
              definition.word = req.query.define;
              
              var definitions = $(".lr_dct_ent.vmod.XpoqFe");
@@ -56,8 +55,7 @@ app.get("/", function(req, res){
               res.header("Content-Type",'application/json');
               res.header("Access-Control-Allow-Origin", "*");
               res.send(JSON.stringify(definition, null, 4));
-     
-                  //console.log(definition);
+
          });
    }
 });
