@@ -38,7 +38,6 @@ app.get("/", function(req, res){
                  var type = $(this).text();
                  definition[type] = [];
                  var selector = $(".lr_dct_sf_sens").eq(i).find("div[style='margin-left:20px'] > .PNlCoe");
-                 //console.log(selector.length);
                  selector.each(function(i, element){
 
                     var newDefinition = {};
