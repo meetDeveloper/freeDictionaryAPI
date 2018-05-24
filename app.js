@@ -21,7 +21,7 @@ app.get("/", function(req, res){
     }, function(err, response, body) {
         
         if(err){
-            return console.error(err)
+            return console.error(err
         }
         
         var definition = {};
