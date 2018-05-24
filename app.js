@@ -32,7 +32,6 @@ app.get("/", function(req, res){
              definition.word = $("div.dDoNo").text();
              
              if(definition.word.length < 1){
-                 //res.header("Content-Type",'application/json');
                  res.header("Access-Control-Allow-Origin", "*");
                  return res.status(404).sendFile(path.join(__dirname+'/404.html'));
              }
