@@ -29,7 +29,7 @@ app.get("/", function(req, res){
             
         var $ = cheerio.load(body);
 
-             definition.word = $("div.dDoNo").text();
+             definition.word = $("div.dDoNo").first().text();
              
              if(definition.word.length < 1){
                  res.header("Access-Control-Allow-Origin", "*");
