@@ -24,8 +24,8 @@ app.get("/", function(req, res){
             return console.error(err);
         }
         
-        res.send(body);
-        return;
+        //res.send(body);
+        //return;
         
         var definition = {};
     
