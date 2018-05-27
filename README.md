@@ -17,5 +17,5 @@ Pull requests are welcome!
 
 ## Support  
 
-If you need any assistance or find any bugs, feel free to contact me directly via email or create a new issue on the projects GitHub page.
+If you need any assistance or find any bugs, feel free to contact me directly via email or create a new issue on the GitHub page.
 
