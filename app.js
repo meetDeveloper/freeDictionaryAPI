@@ -28,6 +28,7 @@ app.get("/", function(req, res){
 
              dictionary.word = $("div.dDoNo span").first().text();
              dictionary.pronunciation = "https:" + $('.lr_dct_spkr.lr_dct_spkr_off audio')[0].attribs.src;
+             dictionary.pronunciation = dictionary.pronunciation.replace('--_gb', '--_us');
              dictionary.phonetic = [];
              $(".lr_dct_ph.XpoqFe").first().find('span').each(function(i, element){
                 dictionary.phonetic.push($(this).text()); 
