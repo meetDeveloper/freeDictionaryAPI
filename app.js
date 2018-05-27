@@ -10,8 +10,8 @@ app.get("/", function(req, res){
     
    if(!req.query.define){
        res.sendFile(path.join(__dirname+'/welcome.html'));
-   }
-   else{
+   }  else {
+       
         request({
         method: 'GET',
         url: 'https://www.google.co.in/search?q=define+' + req.query.define,
@@ -24,17 +24,21 @@ app.get("/", function(req, res){
             return console.error(err);
         }
         
-        //res.send(body);
-        //return;
-        
-        var definition = {};
+        var dictionary = {};
     
             
         var $ = cheerio.load(body);
 
-             definition.word = $("div.dDoNo").first().text();
+             dictionary.word = $("div.dDoNo span").first().text();
+             dictionary.pronunciation = "https:" + $('.lr_dct_spkr.lr_dct_spkr_off audio')[0].attribs.src;
+             dictionary.phonetic = [];
+             $(".lr_dct_ph.XpoqFe").first().find('span').each(function(i, element){
+                dictionary.phonetic.push($(this).text()); 
+             });
+             dictionary.meaning = {};
+
              
-             if(definition.word.length < 1){
+             if(dictionary.word.length < 1){
                  res.header("Access-Control-Allow-Origin", "*");
                  return res.status(404).sendFile(path.join(__dirname+'/404.html'));
              }
@@ -43,9 +47,11 @@ app.get("/", function(req, res){
              
              var mainPart = definitions.first().find(".lr_dct_sf_h");
              
+             var meaning = {};
+             
              mainPart.each(function(i, element){
                  var type = $(this).text();
-                 definition[type] = [];
+                 meaning[type] = [];
                  var selector = $(".lr_dct_sf_sens").eq(i).find("div[style='margin-left:20px'] > .PNlCoe");
                  
                  selector.each(function(i, element){
@@ -64,14 +70,17 @@ app.get("/", function(req, res){
                     if(synonyms.length > 0)
                         newDefinition.synonyms = synonyms;
                     
-                    definition[type].push(newDefinition); 
+                    meaning[type].push(newDefinition); 
                  });
 
              }) ;   
              
+             dictionary.meaning = meaning;
+             
+              //console.log(dictionary.noun[0]);
               res.header("Content-Type",'application/json');
               res.header("Access-Control-Allow-Origin", "*");
-              res.send(JSON.stringify(definition, null, 4));
+              res.send(JSON.stringify(dictionary, null, 4));
 
          });
    }
