@@ -8,7 +8,7 @@ This Self Project intends to create one.
 
 To use just pass the query string with parameter define equal to the word you want definition of.
 
-Eg. /?define=hello, will give you definition of hello as provided by Google in JSON format.
+Eg. **/?define=hello**, will give you definition of hello as provided by Google in JSON format.
 
 ## Future plans  
 
