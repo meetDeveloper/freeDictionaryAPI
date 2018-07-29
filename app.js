@@ -131,7 +131,7 @@ app.get("/", function(req, res){
 		$(this).find('span').each(function(i, element){
 			pho.push($(this).text())
 		});
-                dictionary.phonetic.push(pho); 
+                 dictionary.phonetic.push(pho); 
 
              });
              dictionary.meaning = {};
@@ -146,13 +146,11 @@ app.get("/", function(req, res){
              
              var mainPart = definitions.first().find(".lr_dct_sf_h");
              
-			 var origin = definitions.find(".vmod").first().next("div.xpdxpnd").text();
-			dictionary.origin = origin;
+	     var origin = definitions.find(".vmod").first().next("div.xpdxpnd").text();
+	     dictionary.origin = origin;
 			
              var meaning = {};
-			 
-			 
-			 
+			 			 
 			 
              mainPart.each(function(i, element){
                  var type = $(this).text();
