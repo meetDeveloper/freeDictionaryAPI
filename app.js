@@ -174,11 +174,12 @@ app.get("/", function(req, res){
                     if(alernaitions.length > 0){
 						if(ia == 0){
 							var pts = alernaitions.split("; ");
-							var alts = {};
+							var alts = [];
 							pts.forEach(function (ent){
 								pt = ent.split(": ")
-								alts[pt[0]] = pt[1];
+								alts.push([pt[0],pt[1]]);
 							});
+
 							newDefinition = extend({"alernaitions":alts}, newDefinition); 
 							 meaning[type].push(newDefinition); 
 						}else{
