@@ -127,7 +127,12 @@ app.get("/", function(req, res){
             // dictionary.pronunciation = dictionary.pronunciation.replace('--_gb', '--_us');
              dictionary.phonetic = [];
              $(".lr_dct_ph.XpoqFe").each(function(i, element){
-                dictionary.phonetic.push($(this).find('span').first().text()); 
+             	var pho = []
+		$(this).find('span').each(function(i, element){
+			pho.push($(this).text())
+		});
+                dictionary.phonetic.push(pho); 
+
              });
              dictionary.meaning = {};
 
