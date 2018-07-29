@@ -121,7 +121,6 @@ app.get("/", function(req, res){
 
              dictionary.word = $("div.dDoNo span").first().text();
              dictionary.pronunciation = []
-			 "https:" + $('.lr_dct_spkr.lr_dct_spkr_off audio')[0].attribs.src;
              $('.lr_dct_spkr.lr_dct_spkr_off audio').each(function(i, element){
                 dictionary.pronunciation.push("https:" + $(this)[0].attribs.src); 
              });
