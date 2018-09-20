@@ -30,7 +30,8 @@ app.get("/", function(req, res){
              
              if(word.length < 1){
                  res.header("Access-Control-Allow-Origin", "*");
-                 return res.status(404).sendFile(path.join(__dirname+'/404.html'));
+                 res.send(body);
+                 //return res.status(404).sendFile(path.join(__dirname+'/404.html'));
              }
              
              dictionary.word = $("div.dDoNo span").first().text();
