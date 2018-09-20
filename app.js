@@ -11,7 +11,7 @@ app.get("/", function(req, res){
        
         request({
         method: 'GET',
-        url: 'https://www.google.co.in/search?q=define+' + req.query.define,
+        url: 'https://www.google.co.in/search?hl=en&q=define+' + req.query.define,
         headers: {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0"
         }
@@ -30,8 +30,7 @@ app.get("/", function(req, res){
              
              if(word.length < 1){
                  res.header("Access-Control-Allow-Origin", "*");
-                 res.send(body);
-                 //return res.status(404).sendFile(path.join(__dirname+'/404.html'));
+                 return res.status(404).sendFile(path.join(__dirname+'/404.html'));
              }
              
              dictionary.word = $("div.dDoNo span").first().text();
