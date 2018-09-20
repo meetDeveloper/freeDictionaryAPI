@@ -25,8 +25,16 @@ app.get("/", function(req, res){
     
             
         var $ = cheerio.load(body);
-
+            
+             var word  = $("div.dDoNo span").first().text();
+             
+             if(word.length < 1){
+                 res.header("Access-Control-Allow-Origin", "*");
+                 return res.status(404).sendFile(path.join(__dirname+'/404.html'));
+             }
+             
              dictionary.word = $("div.dDoNo span").first().text();
+             console.log(dictionary.word);
              dictionary.pronunciation = "https:" + $('.lr_dct_spkr.lr_dct_spkr_off audio')[0].attribs.src;
              dictionary.pronunciation = dictionary.pronunciation.replace('--_gb', '--_us');
              dictionary.phonetic = [];
@@ -35,12 +43,7 @@ app.get("/", function(req, res){
              });
              dictionary.meaning = {};
 
-             
-             if(dictionary.word.length < 1){
-                 res.header("Access-Control-Allow-Origin", "*");
-                 return res.status(404).sendFile(path.join(__dirname+'/404.html'));
-             }
-             
+
              var definitions = $(".lr_dct_ent.vmod.XpoqFe");
              
              var mainPart = definitions.first().find(".lr_dct_sf_h");
