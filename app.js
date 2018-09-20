@@ -51,7 +51,7 @@ app.get("/", function(req, res){
              var meaning = {};
              
              mainPart.each(function(i, element){
-                 var type = $(this).text();
+                 var type = $(this).find('i').text();
                  meaning[type] = [];
                  var selector = $(".lr_dct_sf_sens").eq(i).find("div[style='margin-left:20px'] > .PNlCoe");
                  
