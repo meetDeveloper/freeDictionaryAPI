@@ -8,10 +8,14 @@ app.get("/", function(req, res){
    if(!req.query.define){
        res.sendFile(path.join(__dirname+'/welcome.html'));
    }  else {
-       
+        
+        var url = 'https://www.google.co.in/search?hl=en&q=define+' + req.query.define;
+        if(req.query.lang){
+           url =  url.replace('en', req.query.lang);
+        }
         request({
         method: 'GET',
-        url: 'https://www.google.co.in/search?hl=en&q=define+' + req.query.define,
+        url: url,
         headers: {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0"
         }
@@ -34,13 +38,17 @@ app.get("/", function(req, res){
              }
              
              dictionary.word = $("div.dDoNo span").first().text();
-             console.log(dictionary.word);
-             dictionary.pronunciation = "https:" + $('.lr_dct_spkr.lr_dct_spkr_off audio')[0].attribs.src;
-             dictionary.pronunciation = dictionary.pronunciation.replace('--_gb', '--_us');
+
+             if(!$('.lr_dct_spkr.lr_dct_spkr_off audio')){
+                    dictionary.pronunciation = "https:" + $('.lr_dct_spkr.lr_dct_spkr_off audio')[0].attribs.src;
+                    dictionary.pronunciation = dictionary.pronunciation.replace('--_gb', '--_us');
+             }
+             
              dictionary.phonetic = [];
              $(".lr_dct_ph.XpoqFe").first().find('span').each(function(i, element){
                 dictionary.phonetic.push($(this).text()); 
              });
+             
              dictionary.meaning = {};
 
 
@@ -78,10 +86,11 @@ app.get("/", function(req, res){
              
              dictionary.meaning = meaning;
              
-              //console.log(dictionary.noun[0]);
-              res.header("Content-Type",'application/json');
-              res.header("Access-Control-Allow-Origin", "*");
-              res.send(JSON.stringify(dictionary, null, 4));
+             Object.keys(dictionary).forEach(key => {(Array.isArray(dictionary[key]) && !dictionary[key].length) && delete dictionary[key]})
+
+             res.header("Content-Type",'application/json');
+             res.header("Access-Control-Allow-Origin", "*");
+             res.send(JSON.stringify(dictionary, null, 4));
 
          });
    }
