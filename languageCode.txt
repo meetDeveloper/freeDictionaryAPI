@@ -1,0 +1,17 @@
+
+Code   	Language
+
+================
+
+en 	 English
+hi 	 Hindi
+es 	 Spanish
+fr	 French
+ru	 Russian
+de 	 German
+it 	 Italian
+ko 	 Korean
+pt-BR 	 Brazilian Portuguese
+zh-CN    Chinese (Simplified)
+ar       Arabic
+tr       Turkish

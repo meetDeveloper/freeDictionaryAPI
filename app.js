@@ -12,7 +12,13 @@ app.get("/", function(req, res){
         var url = 'https://www.google.co.in/search?hl=en&q=define+' + req.query.define;
         if(req.query.lang){
            url =  url.replace('en', req.query.lang);
+           if(req.query.lang === "hi"){
+               url =  url.replace('define', 'matlab');
+           }
         }
+        
+        url = encodeURI(url);
+
         request({
         method: 'GET',
         url: url,
@@ -27,9 +33,10 @@ app.get("/", function(req, res){
         
         var dictionary = {};
     
-            
+             
         var $ = cheerio.load(body);
-            
+        
+
              var word  = $("div.dDoNo span").first().text();
              
              if(word.length < 1){
@@ -96,7 +103,9 @@ app.get("/", function(req, res){
    }
 });
 
-
+app.get("/languageCode.txt", function(req, res){
+    res.sendFile(__dirname + "/languageCode.txt");
+})
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("I am listening...");
