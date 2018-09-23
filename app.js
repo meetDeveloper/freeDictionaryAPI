@@ -81,7 +81,7 @@ app.get("/", function(req, res){
                                    });
                                    
                     if(example.length > 0)
-                        newDefinition.example = example.substring(1, example.length - 1);               
+                        newDefinition.example = example.replace(/(^")|("$)/g, '');  
                     
                     if(synonyms.length > 0)
                         newDefinition.synonyms = synonyms;
