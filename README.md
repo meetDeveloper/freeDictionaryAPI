@@ -1,8 +1,6 @@
 # Google Dictionary API
 
-As google does not provide any API for google Dictionary.
-This Self Project intends to create one.
-
+Google does not provide API for google Dictionary so I created one.
 
 ## Getting Started
 
