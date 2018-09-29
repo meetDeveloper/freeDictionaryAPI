@@ -1,12 +1,15 @@
-var app = require("express")();
-var cheerio = require("cheerio");
-var request = require('request');
-var path    = require("path");
+var   express = require("express"),
+      app     = express(),
+      cheerio = require("cheerio"),
+      request = require('request'),
+      path    = require("path");
+
+app.use(express.static('public'));
 
 app.get("/", function(req, res){
     
    if(!req.query.define){
-       res.sendFile(path.join(__dirname+'/welcome.html'));
+       res.sendFile(path.join(__dirname+'/views//index.html'));
    }  else {
         
         var url = 'https://www.google.co.in/search?hl=en&q=define+' + req.query.define;
@@ -41,7 +44,7 @@ app.get("/", function(req, res){
              
              if(word.length < 1){
                  res.header("Access-Control-Allow-Origin", "*");
-                 return res.status(404).sendFile(path.join(__dirname+'/404.html'));
+                 return res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
              }
              
              dictionary.word = $("div.dDoNo span").first().text();
@@ -103,9 +106,9 @@ app.get("/", function(req, res){
    }
 });
 
-app.get("/languageCode.txt", function(req, res){
-    res.sendFile(__dirname + "/languageCode.txt");
-})
+// app.get("/languageCode.txt", function(req, res){
+//     res.sendFile(__dirname + "/languageCode.txt");
+// })
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("I am listening...");
