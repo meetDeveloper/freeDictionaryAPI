@@ -25,3 +25,11 @@ Pull requests are welcome!
 
 If you need any assistance or find any bugs, feel free to contact me directly via email or create a new issue on the GitHub page.
 
+## Related Projects
+
+### Dictionary Anywhere
+
+Dictionary Anywhere extension helps you stay focused on what you are reading by eliminating the need to search for meaning, 
+Double-clicking any word will view its definition in a small pop-up bubble. 
+Now you never have to leave what you are reading to search meaning for the words you don't know.
+** Enjoy Reading Uninterrupted!!! **
