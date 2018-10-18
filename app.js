@@ -36,12 +36,12 @@ app.get("/", function(req, res){
         
         var dictionary = {};
     
-        return res.send(body);
+        //return res.send(body);
         var $ = cheerio.load(body);
         
 
              var word  = $("div.dDoNo span").first().text();
-             
+             console.log(word);
              if(word.length < 1){
                  res.header("Access-Control-Allow-Origin", "*");
                  return res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
