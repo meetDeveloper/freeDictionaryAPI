@@ -36,7 +36,7 @@ app.get("/", function(req, res){
         
         var dictionary = {};
     
-        return res.send(body);
+        //return res.send(body);
         var $ = cheerio.load(body);
         
 
