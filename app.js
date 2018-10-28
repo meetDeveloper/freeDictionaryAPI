@@ -22,12 +22,12 @@ app.get("/", function(req, res){
         }
         
         url = encodeURI(url);
-        //console.log(random_useragent.getRandom());
+
         request({
         method: 'GET',
         url: url,
         headers: {
-            "User-Agent": random_useragent.getRandom()
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0"
         }
     }, function(err, response, body) {
         
