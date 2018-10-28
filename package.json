@@ -12,6 +12,7 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.16.2",
+    "random-useragent": "^0.3.1",
     "request": "^2.83.0"
   }
 }
