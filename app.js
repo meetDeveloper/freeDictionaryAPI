@@ -22,7 +22,7 @@ app.get("/", function(req, res){
         }
         
         url = encodeURI(url);
-        console.log(random_useragent.getRandom());
+        //console.log(random_useragent.getRandom());
         request({
         method: 'GET',
         url: url,
@@ -37,7 +37,7 @@ app.get("/", function(req, res){
         
         var dictionary = {};
     
-        //return res.send(body);
+        return res.send(body);
         var $ = cheerio.load(body);
         
 
