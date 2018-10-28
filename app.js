@@ -42,7 +42,7 @@ app.get("/", function(req, res){
         
 
              var word  = $("div.dDoNo span").first().text();
-             console.log(word);
+             //console.log(word);
              if(word.length < 1){
                  res.header("Access-Control-Allow-Origin", "*");
                  return res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
