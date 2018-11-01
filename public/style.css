@@ -9,6 +9,10 @@ body {
 	height: 100%;
 }
 
+nav {
+	background-color: #eee;
+}
+
 /*.tx2 {
 	text-align: center;
 }*/
