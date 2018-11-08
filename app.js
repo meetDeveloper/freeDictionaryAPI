@@ -2,8 +2,7 @@ var   express = require("express"),
       app     = express(),
       cheerio = require("cheerio"),
       request = require('request'),
-      path    = require("path"),
-      random_useragent = require('random-useragent');
+      path    = require("path");
 
 app.use(express.static('public'));
 
