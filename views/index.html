@@ -5,33 +5,22 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
       <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-      <link rel="stylesheet" type="text/css" href="style.css">
+      <link rel="stylesheet" type="text/css" href="/style.css">
    </head>
    <body>
+     <nav class="navbar navbar-default">
+        <div class="container">
+            <a class="navbar-brand" href="/">(unofficial) Google Dictionary API</a>
+            <div>
+               <a href="https://github.com/meetDeveloper/googleDictionaryAPI" target="_blank"><i class="fa fa-github fa-2x tx1"></i></a>
+               <a href="mailto:srjjain1996@gmail.com"><i class="fa fa-envelope-o fa-2x tx1"></i></a>
+            <div>
+        </div>
+     </nav>
       <div class="ax4">
-         <nav class="navbar">
-            <a class="navbar-brand" href="/">Google Dictionary API</a>
-            <form class="form-inline bx1">
-               <a href="https://github.com/meetDeveloper/googleDictionaryAPI"><i class="fa fa-github fa-2x tx1" aria-hidden="true"></i></a>
-               <a href="mailto:srjjain1996@gmail.com"><i class="fa fa-envelope-o fa-2x tx1" aria-hidden="true"></i></a>
-            </form>
-         </nav>
-         <section class="tx2">
-         <div class="jumbotron">
-            <h1 class="display-4">Hi There!</h1>
-            <p class="ax1">Google does not provide API for google Dictionary so I created one.</p>
-            <hr class="my-4">
-            <p>To use just pass the query string with parameter <strong>define</strong> equal to the word you want meaning of.</p>
-            <p>Eg. <strong>/?define=hello</strong>, will give you definition of <strong>hello</strong></p>
-            <br>
-            <p>Optionally you can also send another parameter <strong>lang</strong> equal to code of the language in which the word appear.</p>
-            <p>Eg. <strong>/?define=Bonjour&amp;lang=fr</strong>, will give you definition of <strong>Bonjour</strong> as present in French Dictionary.</p>
-            <br>
-            <p> List of languages supported can be found <a href="/languageCode.txt">here</a> for your reference.</p>
-         </div>
          <section class="form ax5">
             <form action="/">
-              <input type="text" name="define" id="input1" required placeholder="Search..">
+              <input type="text" name="define" id="input1" required placeholder="Try it here...">
               <button type="submit" class="search">
                <i class="fa fa-search"></i>
               </button>
@@ -55,8 +44,128 @@
               </div>
             </form>
          </section>
+         <section class="tx2">
+         <div class="jumbotron">
+            <h2>Get word definitions</h2>
+            <p><strong>Usage:</strong> set the query parameter <strong><code>define</code></strong> equal to the word you want the meaning of.</p>
+            <p>Eg.: <code>/?define=hello</code>, will return:</p>
+<pre>
+  <code>
+  {
+    "word": "hello",
+    "phonetic": [
+      "həˈləʊ",
+      "hɛˈləʊ"
+    ],
+    "meaning": {
+      "exclamation": [
+        {
+          "definition": "used as a greeting or to begin a telephone conversation.",
+          "example": "hello there, Katie!"
+        }
+      ],
+      "noun": [
+        {
+          "definition": "an utterance of ‘hello’; a greeting.",
+          "example": "she was getting polite nods and hellos from people"
+        }
+      ],
+      "verb": [
+        {
+          "definition": "say or shout ‘hello’.",
+          "example": "I pressed the phone button and helloed"
+        }
+      ]
+    }
+  }
+  </code>
+</pre>
+            <br>
+            <br>
+            <hr>
+            <br>
+            <h2>Language support</h2>
+            <br>
+            <p>Optionally you can send an additional parameter <code>lang</code> set equal to the language the word comes from.</p>
+            <p>Eg.: <code>/?define=Bonjour&amp;lang=fr</code>, will give you definition of <strong>Bonjour</strong> as present in Google's French Dictionary:</p>
+            <br>
+<pre>
+<code>
+  {
+    "word": "bonjour",
+    "meaning": {
+      "nom_masculin": [
+        {
+          "definition": "Souhait de bonne journée (adressé en arrivant, en rencontrant).",
+          "synonyms": [
+            "salut"
+          ]
+        }
+      ]
+    }
+  }
+</code>
+</pre>
+            <p> A list of supported language codes can be found <a href="/languageCode.txt">here</a> for your reference:</p>
+
+            <table>
+              <tr>
+                <th>Language Code</th>
+                <th>Language</th>
+              </tr>
+              <tr>
+                <td><code>en</code></td>
+                <td>English</td>
+              </tr>
+              <tr>
+                <td><code>hi</code></td>
+                <td>Hindi</td>
+              </tr>
+              <tr>
+                <td><code>es</code></td>
+                <td>Spanish</td>
+              </tr>
+              <tr>
+                <td><code>fr</code></td>
+                <td>French</td>
+              </tr>
+              <tr>
+                <td><code>ru</code></td>
+                <td>Russian</td>
+              </tr>
+              <tr>
+                <td><code>de</code></td>
+                <td>German</td>
+              </tr>
+              <tr>
+                <td><code>it</code></td>
+                <td>Italian</td>
+              </tr>
+              <tr>
+                <td><code>ko</code></td>
+                <td>Korean</td>
+              </tr>
+              <tr>
+                <td><code>pt-BR</code></td>
+                <td>Brazilian Portuguese</td>
+              </tr>
+              <tr>
+                <td><code>zh-CN</code></td>
+                <td>Chinese (Simplified)</td>
+              </tr>
+              <tr>
+                <td><code>ar</code></td>
+                <td>Arabic</td>
+              </tr>
+              <tr>
+                <td><code>tr</code></td>
+                <td>Turkish</td>
+              </tr>
+            </table>
+         </div>
+
          <footer class ="ax2 ax5 bx2">
-            <i class="fa fa-github fa-2x tx1" aria-hidden="true"></i> <a class="tx8" href="https://github.com/meetDeveloper/googleDictionaryAPI"> Github </a>
+            <i class="fa fa-github fa-2x tx1" aria-hidden="true"></i> <a class="tx8" href="https://github.com/meetDeveloper/googleDictionaryAPI" target="_blank"> Github </a>
             <i class="fa fa-envelope-o fa-2x tx1" aria-hidden="true"></i><a class="tx8" href="mailto:srjjain1996@gmail.com"> Email </a>
          </footer>
          <br>

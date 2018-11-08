@@ -9,8 +9,30 @@ body {
 	height: 100%;
 }
 
-.tx2 {
+nav {
+	background-color: #eee;
+}
+
+/*.tx2 {
 	text-align: center;
+}*/
+
+pre {
+	background-color: #222f44;
+	color: #efe0d5;
+}
+
+table, th, td {
+    border: 1px solid black;
+	padding: 5px;
+}
+
+th {
+	text-align: center;
+}
+
+table {
+    width: 50%;
 }
 
 .form {
