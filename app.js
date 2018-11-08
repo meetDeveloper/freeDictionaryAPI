@@ -12,6 +12,11 @@ app.get("/", function(req, res){
    if(!req.query.define){
        res.sendFile(path.join(__dirname+'/views//index.html'));
    }  else {
+        if(encodeURIComponent(req.query.define).includes("%")){
+                 console.log("yes");
+                 res.header("Access-Control-Allow-Origin", "*");
+                 return res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
+        }
         
         var url = 'https://www.google.co.in/search?hl=en&q=define+' + req.query.define;
         if(req.query.lang){
