@@ -17,7 +17,7 @@ app.get("/", function(req, res){
                  return res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
         }
         
-        var url = 'https://en.oxforddictionaries.com/search?filter=dictionary&query=' + req.query.define;
+        var url = 'https://en.oxforddictionaries.com/search?filter=noad&query=' + req.query.define;
         // if(req.query.lang){
         //   url =  url.replace('en', req.query.lang);
         //   if(req.query.lang === "hi"){
