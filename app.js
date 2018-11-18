@@ -17,13 +17,13 @@ app.get("/", function(req, res){
                  return res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
         }
         
-        var url = 'https://www.google.co.in/search?hl=en&q=define+' + req.query.define;
-        if(req.query.lang){
-           url =  url.replace('en', req.query.lang);
-           if(req.query.lang === "hi"){
-               url =  url.replace('define', 'matlab');
-           }
-        }
+        var url = 'https://en.oxforddictionaries.com/search?filter=dictionary&query=' + req.query.define;
+        // if(req.query.lang){
+        //   url =  url.replace('en', req.query.lang);
+        //   if(req.query.lang === "hi"){
+        //       url =  url.replace('define', 'matlab');
+        //   }
+        // }
         
         url = encodeURI(url);
 
@@ -39,81 +39,79 @@ app.get("/", function(req, res){
             return console.error(err);
         }
         
-        var dictionary = {};
+
     
         //return res.send(body);
         var $ = cheerio.load(body);
         
 
-             var word  = $("div.dDoNo span").first().text();
-             //console.log(word);
-             if(word.length < 1){
-                 res.header("Access-Control-Allow-Origin", "*");
-                 return res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
-             }
-             
-             dictionary.word = $("div.dDoNo span").first().text();
+            var word  = $(".hwg .hw").first()[0].childNodes[0].nodeValue;
+            if(word.length < 1){
+                res.header("Access-Control-Allow-Origin", "*");
+                return res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
+            }
+            
+            var dictionary = {};
+            dictionary.word = word;
+            dictionary.phonetic = $(".phoneticspelling").first().text();
+            dictionary.meaning = {}
 
-             if(!$('.lr_dct_spkr.lr_dct_spkr_off audio')){
-                    dictionary.pronunciation = "https:" + $('.lr_dct_spkr.lr_dct_spkr_off audio')[0].attribs.src;
-                    dictionary.pronunciation = dictionary.pronunciation.replace('--_gb', '--_us');
-             }
-             
-             dictionary.phonetic = [];
-             $(".lr_dct_ph.XpoqFe").first().find('span').each(function(i, element){
-                dictionary.phonetic.push($(this).text()); 
-             });
-             
-             dictionary.meaning = {};
+            var i,j = 0;
 
+            var entryHead = $(".entryHead.primary_homograph");
+            var array = [];
+            for(i = 1; i < entryHead.length; i++){
+                array[i - 1] = $("#" + entryHead[i - 1].attribs.id + " ~ .gramb").length - $("#" + entryHead[i].attribs.id + " ~ .gramb").length ;
+            }
+            array.push($("#" + entryHead[entryHead.length - 1].attribs.id + " ~ .gramb").length);     
+            
+            var grambs = $("section.gramb");
+            
+            for(i = 0; i < grambs.length; i++){
+                	if(i + 1> array[j]){
+                		break;
+                	}
+                	var partofspeech = $(grambs[i]).find(".ps.pos .pos").text();
+                	$(grambs[i]).find(".semb").each(function(i, element){
+                		var meaningArray = [];
+                		$(element).find("> li").each(function(i, element){
+                		    
+                			var item = $(element).find("> .trg");
+                			
+                			var definition = $(item).find(" > p > .ind").text();
+                			var example = $(item).find(" > .exg  > .ex > em").first().text();
+                			var synonymsText = $(item).find(" > .synonyms > .exg  > .exs").first().text();
+                			var synonyms = synonymsText.split(/,|;/).filter(synonym => synonym!= ' ' && synonym).map(function(item) {
+                                             return item.trim();
+                                           });
+                                           
+                            var newDefinition = {};
+                        	if(definition.length > 0)
+                        	    newDefinition.definition = definition;
+                        			                                   
+                            if(example.length > 0)
+                                newDefinition.example = example.substring(1, example.length - 1)
+                            
+                            if(synonyms.length > 0)
+                                newDefinition.synonyms = synonyms;
 
-             var definitions = $(".lr_dct_ent.vmod.XpoqFe");
-             
-             var mainPart = definitions.first().find(".lr_dct_sf_h");
-             
-             var meaning = {};
-             
-             mainPart.each(function(i, element){
-                 var type = $(this).find('i').text();
-                 meaning[type] = [];
-                 var selector = $(".lr_dct_sf_sens").eq(i).find("div[style='margin-left:20px'] > .PNlCoe");
-                 
-                 selector.each(function(i, element){
-                    var newDefinition = {};
-                    newDefinition.definition = $(this).find("div[data-dobid='dfn']").text();
-                    var example  = $(this).find("span.vmod .vk_gy").text();
-                    var synonymsText = $(this).find("div.vmod td.lr_dct_nyms_ttl + td > span:not([data-log-string='synonyms-more-click'])").text();
-                
-                    var synonyms = synonymsText.split(/,|;/).filter(synonym => synonym!= ' ' && synonym).map(function(item) {
-                                        return item.trim();
-                                   });
-                                   
-                    if(example.length > 0)
-                        newDefinition.example = example.replace(/(^")|("$)/g, '');  
-                    
-                    if(synonyms.length > 0)
-                        newDefinition.synonyms = synonyms;
-                    
-                    meaning[type].push(newDefinition); 
-                 });
+                			meaningArray.push(newDefinition);
 
-             }) ;   
-             
-             dictionary.meaning = meaning;
-             
-             Object.keys(dictionary).forEach(key => {(Array.isArray(dictionary[key]) && !dictionary[key].length) && delete dictionary[key]})
-
-             res.header("Content-Type",'application/json');
-             res.header("Access-Control-Allow-Origin", "*");
-             res.send(JSON.stringify(dictionary, null, 4));
+                		})
+                		dictionary.meaning[partofspeech] = meaningArray.slice();
+                	})
+                		
+            }     
+            
+            Object.keys(dictionary).forEach(key => {(Array.isArray(dictionary[key]) && !dictionary[key].length) && delete dictionary[key]})
+            res.header("Content-Type",'application/json');
+            res.header("Access-Control-Allow-Origin", "*");
+            res.send(JSON.stringify(dictionary, null, 4));
 
          });
    }
 });
 
-// app.get("/languageCode.txt", function(req, res){
-//     res.sendFile(__dirname + "/languageCode.txt");
-// })
 
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("I am listening...");
