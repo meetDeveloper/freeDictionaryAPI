@@ -110,7 +110,7 @@ app.get("/", function(req, res){
             
             Object.keys(dictionary).forEach(key => {(Array.isArray(dictionary[key]) && !dictionary[key].length) && delete dictionary[key]});
             
-            if(!$(".hwg .hw").first()[0]){
+            if($(".hwg .hw").first()[0]){
                 res.header("Content-Type",'application/json');
                 res.header("Access-Control-Allow-Origin", "*");
                 res.send(JSON.stringify(dictionary, null, 4));
