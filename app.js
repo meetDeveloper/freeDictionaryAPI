@@ -43,9 +43,13 @@ app.get("/", function(req, res){
     
         //return res.send(body);
         var $ = cheerio.load(body);
-        res.send(body);
-            console.log($(".hwg .hw").first()[0]);
-            var word  = $(".hwg .hw").first()[0].childNodes[0].nodeValue;
+
+                    if($(".hwg .hw").first()[0])
+                        var word  = $(".hwg .hw").first()[0].childNodes[0].nodeValue;
+                    else {
+                        res.send(body);
+                    }
+                    
             console.log(word);
             if(word.length < 1){
                 res.header("Access-Control-Allow-Origin", "*");
@@ -104,10 +108,14 @@ app.get("/", function(req, res){
                 		
             }     
             
-            Object.keys(dictionary).forEach(key => {(Array.isArray(dictionary[key]) && !dictionary[key].length) && delete dictionary[key]})
-            //res.header("Content-Type",'application/json');
-            //res.header("Access-Control-Allow-Origin", "*");
-            //res.send(JSON.stringify(dictionary, null, 4));
+            Object.keys(dictionary).forEach(key => {(Array.isArray(dictionary[key]) && !dictionary[key].length) && delete dictionary[key]});
+            
+            if(!$(".hwg .hw").first()[0]){
+                res.header("Content-Type",'application/json');
+                res.header("Access-Control-Allow-Origin", "*");
+                res.send(JSON.stringify(dictionary, null, 4));
+            }
+               
 
          });
    }
