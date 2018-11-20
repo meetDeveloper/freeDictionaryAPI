@@ -43,7 +43,7 @@ app.get("/", function(req, res){
     
         //return res.send(body);
         var $ = cheerio.load(body);
-        
+        res.send(body);
             console.log($(".hwg .hw").first()[0]);
             var word  = $(".hwg .hw").first()[0].childNodes[0].nodeValue;
             console.log(word);
