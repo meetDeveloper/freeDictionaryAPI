@@ -44,12 +44,12 @@ app.get("/", function(req, res){
         //return res.send(body);
         var $ = cheerio.load(body);
 
-                    if($(".hwg .hw").first()[0])
-                        var word  = $(".hwg .hw").first()[0].childNodes[0].nodeValue;
-                    else {
+                    if(!($(".hwg .hw").first()[0])){
                         console.log(req.query.define)
                         res.send(body);
-                    }
+                    }  else {
+                        var word  = $(".hwg .hw").first()[0].childNodes[0].nodeValue;
+                    
                     
             console.log(word);
             if(word.length < 1){
@@ -116,8 +116,8 @@ app.get("/", function(req, res){
                 res.header("Access-Control-Allow-Origin", "*");
                 res.send(JSON.stringify(dictionary, null, 4));
             }
-               
-
+    }
+            
          });
    }
 });
