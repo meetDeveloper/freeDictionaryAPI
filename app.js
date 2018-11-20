@@ -45,7 +45,8 @@ app.get("/", function(req, res){
         var $ = cheerio.load(body);
 
                     if(!($(".hwg .hw").first()[0])){
-                        console.log(req.query.define)
+                        console.log(req.query.define);
+                        console.log($(".searchHeading").first()[0]);
                         res.send(body);
                     }  else {
                         var word  = $(".hwg .hw").first()[0].childNodes[0].nodeValue;
