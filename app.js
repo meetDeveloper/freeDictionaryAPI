@@ -47,6 +47,7 @@ app.get("/", function(req, res){
                     if($(".hwg .hw").first()[0])
                         var word  = $(".hwg .hw").first()[0].childNodes[0].nodeValue;
                     else {
+                        console.log(req.query.define)
                         res.send(body);
                     }
                     
