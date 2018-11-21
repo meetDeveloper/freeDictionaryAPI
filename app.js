@@ -35,33 +35,30 @@ app.get("/", function(req, res){
         }
     }, function(err, response, body) {
         
-        if(err){
-            return console.error(err);
-        }
-        
+            if(err){
+                return console.error(err);
+            }
+            
+            var $ = cheerio.load(body);
 
-    
-        //return res.send(body);
-        var $ = cheerio.load(body);
-
-                    if(!($(".hwg .hw").first()[0])){
-                        console.log(req.query.define);
-                        console.log($(".searchHeading").first()[0]);
-                        res.send(body);
-                    }  else {
-                        var word  = $(".hwg .hw").first()[0].childNodes[0].nodeValue;
                     
                     
-            console.log(word);
-            if(word.length < 1){
+            if(!($(".hwg .hw").first()[0])){
+                console.log($(".searchHeading").first().text());
+                console.log(req.query.define + "is not present in Dictionary.");
                 res.header("Access-Control-Allow-Origin", "*");
                 return res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
             }
             
+            var word  = $(".hwg .hw").first()[0].childNodes[0].nodeValue;
             var dictionary = {};
             dictionary.word = word;
+            
             dictionary.phonetic = $(".phoneticspelling").first().text();
-            dictionary.meaning = {}
+            if(dictionary.phonetic.length < 1)
+                dictionary.phonetic = undefined;
+
+            dictionary.meaning = {};
 
             var i,j = 0;
 
@@ -117,10 +114,10 @@ app.get("/", function(req, res){
                 res.header("Access-Control-Allow-Origin", "*");
                 res.send(JSON.stringify(dictionary, null, 4));
             }
-    }
+    
             
-         });
-   }
+        });
+    }
 });
 
 
