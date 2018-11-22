@@ -45,7 +45,7 @@ app.get("/", function(req, res){
                     
             if(!($(".hwg .hw").first()[0])){
                 console.log($(".searchHeading").first().text());
-                console.log(req.query.define + "is not present in Dictionary.");
+                console.log(req.query.define + " is not present in Dictionary.");
                 res.header("Access-Control-Allow-Origin", "*");
                 return res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
             }
