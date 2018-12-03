@@ -106,6 +106,18 @@ app.get("/", function(req, res){
                 	})
                 		
             }     
+
+            // Creating Main Definition when there no group of definitions, like the words "is" or "are"
+            if (JSON.stringify(dictionary.meaning) == '{"":[{}]}') {
+                var definition = $(grambs[0]).text();
+                dictionary.meaning = {
+                    'Main definition': [
+                        {
+                            "definition": definition
+                        }
+                    ]
+                }
+            }        
             
             Object.keys(dictionary).forEach(key => {(Array.isArray(dictionary[key]) && !dictionary[key].length) && delete dictionary[key]});
             
