@@ -4,6 +4,8 @@ var   express = require("express"),
       request = require('request'),
       path    = require("path");
 
+const port = process.env.PORT || 3000;
+
 app.use(express.static('public'));
 
 app.get("/", function(req, res){
@@ -60,64 +62,60 @@ app.get("/", function(req, res){
 
             dictionary.meaning = {};
 
-            var i,j = 0;
-
-            var entryHead = $(".entryHead.primary_homograph");
-            var array = [];
-            for(i = 1; i < entryHead.length; i++){
-                array[i - 1] = $("#" + entryHead[i - 1].attribs.id + " ~ .gramb").length - $("#" + entryHead[i].attribs.id + " ~ .gramb").length ;
-            }
-            array.push($("#" + entryHead[entryHead.length - 1].attribs.id + " ~ .gramb").length);     
-            
+            var i = 0;
             var grambs = $("section.gramb");
-            
-            for(i = 0; i < grambs.length; i++){
-                	if(i + 1> array[j]){
-                		break;
-                	}
-                	var partofspeech = $(grambs[i]).find(".ps.pos .pos").text();
-                	$(grambs[i]).find(".semb").each(function(i, element){
-                		var meaningArray = [];
-                		$(element).find("> li").each(function(i, element){
-                		    
-                			var item = $(element).find("> .trg");
-                			
-                			var definition = $(item).find(" > p > .ind").text();
-                			var example = $(item).find(" > .exg  > .ex > em").first().text();
-                			var synonymsText = $(item).find(" > .synonyms > .exg  > .exs").first().text();
-                			var synonyms = synonymsText.split(/,|;/).filter(synonym => synonym!= ' ' && synonym).map(function(item) {
-                                             return item.trim();
-                                           });
-                                           
-                            var newDefinition = {};
-                        	if(definition.length > 0)
-                        	    newDefinition.definition = definition;
-                        			                                   
-                            if(example.length > 0)
-                                newDefinition.example = example.substring(1, example.length - 1)
-                            
-                            if(synonyms.length > 0)
-                                newDefinition.synonyms = synonyms;
 
-                			meaningArray.push(newDefinition);
-
-                		})
-                		dictionary.meaning[partofspeech] = meaningArray.slice();
-                	})
-                		
-            }     
-
-            // Creating Main Definition when there no group of definitions, like the words "is" or "are"
-            if (JSON.stringify(dictionary.meaning) == '{"":[{}]}') {
-                var definition = $(grambs[0]).text();
-                dictionary.meaning = {
-                    'Main definition': [
-                        {
-                            "definition": definition
-                        }
-                    ]
+            var partBefore = ''
+            var partofspeech = ''
+            var definition = ''
+            var k = 1
+            for (i = 0; i < grambs.length; i++) {
+                partBefore = partofspeech
+                partofspeech = $(grambs[i]).find(".ps.pos .pos").text();
+                if (partofspeech == '') partofspeech = $(grambs[i]).find(".domain_labels").text().trim();
+                if (partofspeech == '' && partBefore != '') partofspeech = partBefore
+                if (partofspeech == '') partofspeech = "main definition"                                
+                if (partofspeech == partBefore) {
+                    k = k + 1
+                    partofspeech = partofspeech + k.toString()
+                }else{
+                    k = 1
                 }
-            }        
+                
+                $(grambs[i]).find(".semb").each(function (i, element) {
+                    var meaningArray = [];
+                    $(element).find("> li").each(function (i, element) {
+
+                        var item = $(element).find("> .trg");
+
+                        definition = $(item).find(" > p > .ind").text();
+                        //if (definition == '') definition = $(grambs[0]).text();
+                        if (definition == '') definition = $(item).find(".crossReference").text();
+
+                        var example = $(item).find(" > .exg  > .ex > em").first().text();
+                        var synonymsText = $(item).find(" > .synonyms > .exg  > .exs").first().text();
+                        var synonyms = synonymsText.split(/,|;/).filter(synonym => synonym != ' ' && synonym).map(function (item) {
+                            return item.trim();
+                        });
+
+                        var newDefinition = {};
+                        if (definition.length > 0)
+                            newDefinition.definition = definition;
+
+                        if (example.length > 0)
+                            newDefinition.example = example.substring(1, example.length - 1)
+
+                        if (synonyms.length > 0)
+                            newDefinition.synonyms = synonyms;
+
+                        meaningArray.push(newDefinition);
+
+                    })
+                    if (definition =='') return
+                    dictionary.meaning[partofspeech] = meaningArray.slice();
+                })
+
+            }
             
             Object.keys(dictionary).forEach(key => {(Array.isArray(dictionary[key]) && !dictionary[key].length) && delete dictionary[key]});
             
@@ -133,6 +131,6 @@ app.get("/", function(req, res){
 });
 
 
-app.listen(process.env.PORT, process.env.IP, function(){
-    console.log("I am listening...");
+app.listen(port, process.env.IP, function(){
+    console.log("I am listening on port: ", port);
 });
