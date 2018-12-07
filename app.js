@@ -50,62 +50,87 @@ app.get("/", function(req, res){
                 return res.status(404).sendFile(path.join(__dirname+'/views/404.html'));
             }
             
-            var word  = $(".hwg .hw").first()[0].childNodes[0].nodeValue;
-            var dictionary = {};
-            dictionary.word = word;
             
-            dictionary.phonetic = $(".phoneticspelling").first().text();
-            if(dictionary.phonetic.length < 1)
-                dictionary.phonetic = undefined;
-
-            dictionary.meaning = {};
+            var dictionary = [];
 
             var i,j = 0;
 
             var entryHead = $(".entryHead.primary_homograph");
+            
             var array = [];
-            for(i = 1; i < entryHead.length; i++){
+            array[0] = $("#" + entryHead[0].attribs.id + " ~ .gramb").length - $("#" + entryHead[1].attribs.id + " ~ .gramb").length ;
+            for(i = 2; i < entryHead.length; i++){
                 array[i - 1] = $("#" + entryHead[i - 1].attribs.id + " ~ .gramb").length - $("#" + entryHead[i].attribs.id + " ~ .gramb").length ;
+                array[i - 1] = array[i - 1] + array[i - 2];
             }
-            array.push($("#" + entryHead[entryHead.length - 1].attribs.id + " ~ .gramb").length);     
+            array.push($("#" + entryHead[i - 1].attribs.id + " ~ .gramb").length + array[i - 2]);     
             
             var grambs = $("section.gramb");
+
+            var numberOfentryGroup = array.length;
+
+            for(i = 0; i < numberOfentryGroup; i++){
+                var entry = {};
+                
+                var word  = $(".hwg .hw")[i].childNodes[0].nodeValue;
+                entry.word = word;
+                console.log(entry.word);
+                
+                var phonetic  = $(".pronSection.etym .pron .phoneticspelling")[i];
+                if(phonetic){
+                    entry.phonetic = phonetic.childNodes[0].data;
+                }
+                
+                entry.meaning = {};
+                
+                var numberOfGrambs = array[i];
+                var start  = 0;
+                if(i > 0){
+                    start = array[i] - 1;
+                }
+                for(j = start; j < numberOfGrambs; j++){
+
+                    	var partofspeech = $(grambs[j]).find(".ps.pos .pos").text();
+                    	$(grambs[j]).find(".semb").each(function(j, element){
+                    		var meaningArray = [];
+                    		$(element).find("> li").each(function(j, element){
+                    		    
+                    			var item = $(element).find("> .trg");
+                    			
+                    			var definition = $(item).find(" > p > .ind").text();
+                    			if(definition.length  === 0){
+                    			    definition = $(item).find(".crossReference").first().text();
+                    			}
+                    			var example = $(item).find(" > .exg  > .ex > em").first().text();
+                    			var synonymsText = $(item).find(" > .synonyms > .exg  > .exs").first().text();
+                    			var synonyms = synonymsText.split(/,|;/).filter(synonym => synonym!= ' ' && synonym).map(function(item) {
+                                                 return item.trim();
+                                               });
+                                               
+                                var newDefinition = {};
+                            	if(definition.length > 0)
+                            	    newDefinition.definition = definition;
+                            			                                   
+                                if(example.length > 0)
+                                    newDefinition.example = example.substring(1, example.length - 1);
+                                
+                                if(synonyms.length > 0)
+                                    newDefinition.synonyms = synonyms;
+    
+                    			meaningArray.push(newDefinition);
+    
+                    		});
+
+                    		if(partofspeech.length === 0)
+                    		    partofspeech = "crossReference";
+                    		entry.meaning[partofspeech] = meaningArray.slice();
+                    	});
+                    		
+                }
+                dictionary.push(entry);
+            }
             
-            for(i = 0; i < grambs.length; i++){
-                	if(i + 1> array[j]){
-                		break;
-                	}
-                	var partofspeech = $(grambs[i]).find(".ps.pos .pos").text();
-                	$(grambs[i]).find(".semb").each(function(i, element){
-                		var meaningArray = [];
-                		$(element).find("> li").each(function(i, element){
-                		    
-                			var item = $(element).find("> .trg");
-                			
-                			var definition = $(item).find(" > p > .ind").text();
-                			var example = $(item).find(" > .exg  > .ex > em").first().text();
-                			var synonymsText = $(item).find(" > .synonyms > .exg  > .exs").first().text();
-                			var synonyms = synonymsText.split(/,|;/).filter(synonym => synonym!= ' ' && synonym).map(function(item) {
-                                             return item.trim();
-                                           });
-                                           
-                            var newDefinition = {};
-                        	if(definition.length > 0)
-                        	    newDefinition.definition = definition;
-                        			                                   
-                            if(example.length > 0)
-                                newDefinition.example = example.substring(1, example.length - 1)
-                            
-                            if(synonyms.length > 0)
-                                newDefinition.synonyms = synonyms;
-
-                			meaningArray.push(newDefinition);
-
-                		})
-                		dictionary.meaning[partofspeech] = meaningArray.slice();
-                	})
-                		
-            }     
+     
             
             Object.keys(dictionary).forEach(key => {(Array.isArray(dictionary[key]) && !dictionary[key].length) && delete dictionary[key]});
             
