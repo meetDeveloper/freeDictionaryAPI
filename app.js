@@ -58,23 +58,24 @@ app.get("/", function(req, res){
             var entryHead = $(".entryHead.primary_homograph");
             
             var array = [];
-            array[0] = $("#" + entryHead[0].attribs.id + " ~ .gramb").length - $("#" + entryHead[1].attribs.id + " ~ .gramb").length ;
-            for(i = 2; i < entryHead.length; i++){
-                array[i - 1] = $("#" + entryHead[i - 1].attribs.id + " ~ .gramb").length - $("#" + entryHead[i].attribs.id + " ~ .gramb").length ;
-                array[i - 1] = array[i - 1] + array[i - 2];
+            var entriesOfFirstEntryHead = $("#" + entryHead[0].attribs.id + " ~ .gramb").length;
+            //console.log(entriesOfFirstEntryHead);
+            for(i = 0; i < entryHead.length; i++){
+                array[i]  =   entriesOfFirstEntryHead - $("#" + entryHead[i].attribs.id + " ~ .gramb").length;
             }
-            array.push($("#" + entryHead[i - 1].attribs.id + " ~ .gramb").length + array[i - 2]);     
+            array[i] = entriesOfFirstEntryHead;
+            //console.log(array);
             
             var grambs = $("section.gramb");
 
-            var numberOfentryGroup = array.length;
+            var numberOfentryGroup = array.length - 1;
 
             for(i = 0; i < numberOfentryGroup; i++){
                 var entry = {};
                 
                 var word  = $(".hwg .hw")[i].childNodes[0].nodeValue;
                 entry.word = word;
-                console.log(entry.word);
+                //console.log(entry.word);
                 
                 var phonetic  = $(".pronSection.etym .pron .phoneticspelling")[i];
                 if(phonetic){
@@ -83,12 +84,11 @@ app.get("/", function(req, res){
                 
                 entry.meaning = {};
                 
-                var numberOfGrambs = array[i];
-                var start  = 0;
-                if(i > 0){
-                    start = array[i] - 1;
-                }
-                for(j = start; j < numberOfGrambs; j++){
+                //var numberOfGrambs = array[i + 1] - array[i];
+                var start  = array[i];
+                var end = array[i + 1];
+
+                for(j = start; j < end; j++){
 
                     	var partofspeech = $(grambs[j]).find(".ps.pos .pos").text();
                     	$(grambs[j]).find(".semb").each(function(j, element){
@@ -123,6 +123,7 @@ app.get("/", function(req, res){
 
                     		if(partofspeech.length === 0)
                     		    partofspeech = "crossReference";
+                    		    
                     		entry.meaning[partofspeech] = meaningArray.slice();
                     	});
                     		
