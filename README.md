@@ -87,9 +87,9 @@ If you need any assistance or find any bugs, feel free to contact me directly vi
 
 ## Related Projects
 
-### Dictionary Anywhere
+### [Dictionary Anywhere](https://github.com/meetDeveloper/Dictionary-Anywhere)
 
-The Dictionary Anywhere extension helps you stay focused on what you are reading by eliminating the need to search for meaning, 
+The **Dictionary Anywhere** extension helps you stay focused on what you are reading by eliminating the need to search for meaning, 
 Double-clicking any word will view its definition in a small pop-up bubble. 
 Now you never have to leave what you are reading to search for the meaning of the words you don't yet know.
 
