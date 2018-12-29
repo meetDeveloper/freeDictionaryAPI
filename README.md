@@ -83,7 +83,7 @@ Pull requests are welcome!
 
 ## Support  
 
-If you need any assistance or find any bugs, feel free to contact me directly via email or [create a new issue](https://github.com/meetDeveloper/googleDictionaryAPI/issues) on the GitHub page.
+If you need any assistance or find any bugs, feel free to contact me directly via [email](mailto:srjjain1996@gmail.com) or [create a new issue](https://github.com/meetDeveloper/googleDictionaryAPI/issues) on the GitHub page.
 
 ## Related Projects
 
