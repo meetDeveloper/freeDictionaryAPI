@@ -67,6 +67,7 @@ List of languages supported can be found [here](https://googledictionaryapi.eu-g
 | Location | Endpoint |
 | :-- | :-- |
 | Root path | `https://googledictionaryapi.eu-gb.mybluemix.net`|
+| Root path | `https://mydictionaryapi.appspot.com/`|
 
 ### HTTP request and query methods
 
@@ -82,13 +83,15 @@ Pull requests are welcome!
 
 ## Support  
 
-If you need any assistance or find any bugs, feel free to contact me directly via email or [create a new issue](https://github.com/meetDeveloper/googleDictionaryAPI/issues) on the GitHub page.
+If you need any assistance or find any bugs, feel free to contact me directly via [email](mailto:srjjain1996@gmail.com) or [create a new issue](https://github.com/meetDeveloper/googleDictionaryAPI/issues) on the GitHub page.
 
 ## Related Projects
 
-### [Dictionary Anywhere](https://addons.mozilla.org/en-US/firefox/addon/dictionary-anyvhere)
+### [Dictionary Anywhere](https://github.com/meetDeveloper/Dictionary-Anywhere)
 
-The [Dictionary Anywhere extension](https://addons.mozilla.org/en-US/firefox/addon/dictionary-anyvhere) helps you stay focused on what you are reading by eliminating the need to search for meaning, 
+The **Dictionary Anywhere** extension helps you stay focused on what you are reading by eliminating the need to search for meaning, 
 Double-clicking any word will view its definition in a small pop-up bubble. 
 Now you never have to leave what you are reading to search for the meaning of the words you don't yet know.
+
+Extension is available for [Google Chrome](https://chrome.google.com/webstore/detail/dictionary-anywhere/hcepmnlphdfefjddkgkblcjkbpbpemac/) and [Mozilla Firefox](https://addons.mozilla.org/en-US/firefox/addon/dictionary-anyvhere).
 ##### Enjoy Reading Uninterrupted!!!
