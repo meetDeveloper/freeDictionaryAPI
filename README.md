@@ -9,33 +9,35 @@ To use, pass the query string with parameter `define` equal to the word you want
 Eg. `/?define=hello`, will give you the Google dictionary definition of **hello**:
 
 ```json
-{
-  "word": "hello",
-  "phonetic": [
-    "həˈləʊ",
-    "hɛˈləʊ"
-  ],
-  "meaning": {
-    "exclamation": [
-      {
-        "definition": "used as a greeting or to begin a telephone conversation.",
-        "example": "hello there, Katie!"
-      }
+[
+  {
+    "word": "hello",
+    "phonetic": [
+      "həˈləʊ",
+      "hɛˈləʊ"
     ],
-    "noun": [
-      {
-        "definition": "an utterance of ‘hello’; a greeting.",
-        "example": "she was getting polite nods and hellos from people"
-      }
-    ],
-    "verb": [
-      {
-        "definition": "say or shout ‘hello’.",
-        "example": "I pressed the phone button and helloed"
-      }
-    ]
+    "meaning": {
+      "exclamation": [
+        {
+          "definition": "used as a greeting or to begin a telephone conversation.",
+          "example": "hello there, Katie!"
+        }
+      ],
+      "noun": [
+        {
+          "definition": "an utterance of ‘hello’; a greeting.",
+          "example": "she was getting polite nods and hellos from people"
+        }
+      ],
+      "verb": [
+        {
+          "definition": "say or shout ‘hello’.",
+          "example": "I pressed the phone button and helloed"
+        }
+      ]
+    }
   }
-}
+]
 ```
 
 
