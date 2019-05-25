@@ -164,15 +164,20 @@ app.get("/", function(req, res) {
                     var entry = {},
                         word = $(".hwg .hw")[i].childNodes[0].nodeValue,
                         phonetic = $(".pronSection.etym .pron .phoneticspelling")[i],
-                        pronunciation = $(".pronSection.etym .pron .pronunciations")[i];
+                        pronunciation = $(".pronSection.etym .pron .pronunciations")[i],
+                        origin = $(".pronSection.etym").eq(i).prev().find(".senseInnerWrapper p").text()
 
                     entry.word = word;
+
                     if (phonetic) {
                         entry.phonetic = phonetic.childNodes[0].data;
                     }
                     if (pronunciation) {
                         entry.pronunciation = $(pronunciation).find("a audio").attr("src");
                     }
+                    
+                    origin && (entry.origin = origin);
+                    
                     entry.meaning = {};
 
                     let start = arrayOfEntryGroup[i],
