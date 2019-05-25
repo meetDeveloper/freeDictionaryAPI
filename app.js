@@ -1,4 +1,4 @@
-var express = require("express"),
+const express = require("express"),
     app = express(),
     cheerio = require("cheerio"),
     request = require('request'),
@@ -7,12 +7,16 @@ var express = require("express"),
 app.use(express.static('public'));
 
 app.get("/", function(req, res) {
-
-    if (!req.query.define) {
+    
+    const queriedWord = req.query.define,
+          queriedLanguage = req.query.lang || 'en';
+    
+    if (!queriedWord) {
         res.sendFile(path.join(__dirname + '/views//index.html'));
     } else {
-        console.log(req.query.define);
-        if (encodeURIComponent(req.query.define).includes("%20")) {
+        console.log(queriedWord);
+
+        if (encodeURIComponent(queriedWord).includes("%20") && queriedLanguage === 'en') {
             res.header("Access-Control-Allow-Origin", "*");
 
             return res.status(404).sendFile(path.join(__dirname + '/views/404.html'));
@@ -24,8 +28,8 @@ app.get("/", function(req, res) {
                 tr: 'nedir'
             };
             
-        if (req.query.lang !== 'en') {
-            url = `https://www.google.co.in/search?hl=${ req.query.lang }&q=${ replaceDefine[req.query.lang] ? replaceDefine[req.query.lang] : 'define' }+${ req.query.define }`;
+        if (queriedLanguage !== 'en') {
+            url = `https://www.google.co.in/search?hl=${ queriedLanguage }&q=${ replaceDefine[queriedLanguage] ? replaceDefine[queriedLanguage] : 'define' }+${ queriedWord }`;
             url = encodeURI(url);
             request({
                 method: 'GET',
@@ -115,7 +119,7 @@ app.get("/", function(req, res) {
             });
         } else {
             
-            url = `https://en.oxforddictionaries.com/search?filter=noad&query=${req.query.define}`;
+            url = `https://en.oxforddictionaries.com/search?filter=noad&query=${queriedWord}`;
             url = encodeURI(url);
 
             request({
@@ -134,7 +138,7 @@ app.get("/", function(req, res) {
 
                 if (!($(".hwg .hw").first()[0])) {
                     console.log($(".searchHeading").first().text());
-                    console.log(req.query.define + " is not present in Dictionary.");
+                    console.log(queriedWord + " is not present in Dictionary.");
                     res.header("Access-Control-Allow-Origin", "*");
                     return res.status(404).sendFile(path.join(__dirname + '/views/404.html'));
                 }
