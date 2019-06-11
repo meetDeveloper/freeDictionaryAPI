@@ -119,7 +119,7 @@ app.get("/", function(req, res) {
             });
         } else {
             
-            url = `https://en.oxforddictionaries.com/search?filter=noad&query=${queriedWord}`;
+            url = `https://www.lexico.com/en/definition/${queriedWord}`;
             url = encodeURI(url);
 
             request({
@@ -129,7 +129,7 @@ app.get("/", function(req, res) {
                     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0"
                 }
             }, function(err, response, body) {
-
+                
                 if (err) {
                     return console.error(err);
                 }
