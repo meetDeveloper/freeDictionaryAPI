@@ -197,7 +197,7 @@ app.get("/", function(req, res) {
                                     item = $(element).find("> .trg"),
                                     definition = $(item).find(" > p > .ind").text(),
                                     example = $(item).find(" > .exg  > .ex > em").first().text(),
-                                    synonymsText = $(item).find(" > .synonyms > .exg  > .exs").first().text(),
+                                    synonymsText = $(item).find(" > .synonyms > .exg  > div").first().text(),
                                     synonyms = synonymsText.split(/,|;/).filter(synonym => synonym != ' ' && synonym).map(function(item) {
                                         return item.trim();
                                     });
