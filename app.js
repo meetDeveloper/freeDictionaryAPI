@@ -170,7 +170,7 @@ app.get("/", function(req, res) {
                     entry.word = word;
 
                     if (phonetic) {
-                        entry.phonetic = phonetic.childNodes[0].data;
+                        entry.phonetic = phonetic.childNodes[0] && phonetic.childNodes[0].data;
                     }
                     if (pronunciation) {
                         entry.pronunciation = $(pronunciation).find("a audio").attr("src");
