@@ -8,7 +8,8 @@ app.use(express.static('public'));
 
 app.get("/", function(req, res) {
     
-    const queriedWord = req.query.define,
+    const VERSION = req.query.v && Number(req.query.v),
+          queriedWord = req.query.define,
           queriedLanguage = req.query.lang || 'en';
     
     if (!queriedWord) {
@@ -25,93 +26,110 @@ app.get("/", function(req, res) {
         var url,
             replaceDefine = {
                 hi: 'matlab',
-                tr: 'nedir'
+                tr: 'nedir',
+                fr: 'définir'
             };
             
         if (queriedLanguage !== 'en') {
-            url = `https://www.google.co.in/search?hl=${ queriedLanguage }&q=${ replaceDefine[queriedLanguage] ? replaceDefine[queriedLanguage] : 'define' }+${ queriedWord }`;
+            url = `https://www.google.com/search?hl=${ queriedLanguage }&q=${ replaceDefine[queriedLanguage] ? replaceDefine[queriedLanguage] : 'define' }+${ queriedWord }`;
             url = encodeURI(url);
             request({
                 method: 'GET',
                 url: url,
                 headers: {
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0"
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36"
                 }
             }, function(err, response, body) {
 
-                if (err) {
-                    return console.error(err);
-                }
+                if (err) { return console.error(err) }
 
                 const $ = cheerio.load(body);
 
-                var dictionary = {},
-                    word = $("div.dDoNo span").first().text(),
-                    meaning,
-                    mainPart,
-                    definitions;
-
-                if (word.length < 1) {
+                let dictionary = [];
+                
+                if($(".lr_container").length === 0) {
+                    console.log(queriedWord + " is not present in Dictionary.");
+    
                     res.header("Access-Control-Allow-Origin", "*");
+    
                     return res.status(404).sendFile(path.join(__dirname + '/views/404.html'));
                 }
+                
+                $(".lr_container").find(".VpH2eb.vmod.XpoqFe").each((index, e) => {
+                    let audio,
+                        word,
+                        phonetic,
+                        origin,
+                        meanings = [];
+                
+                    word = $(e).find(".WI9k4c").find("[data-dobid='hdw']").text();
+                    phonetic = $(e).find(".WI9k4c").find(".S23sjd").text();
+                    audio = $(e).find(".gycwpf.D5gqpe").find("source").attr('src');
+                    origin = $(e).find("[jsname='Hqfs0d']").find("div div div").last().find('span').not(':has(sup)').text();
 
-                dictionary.word = $("div.dDoNo span").first().text();
-
-                if (!$('.lr_dct_spkr.lr_dct_spkr_off audio')) {
-                    dictionary.pronunciation = "https:" + $('.lr_dct_spkr.lr_dct_spkr_off audio')[0].attribs.src;
-                    dictionary.pronunciation = dictionary.pronunciation.replace('--_gb', '--_us');
-                }
-
-                dictionary.phonetic = [];
-                $(".lr_dct_ph.XpoqFe").first().find('span').each(function(i, element) {
-                    dictionary.phonetic.push($(this).text());
-                });
-
-                dictionary.meaning = {};
-
-                meaning = {},
-                definitions = $(".lr_dct_ent.vmod.XpoqFe"),
-                mainPart = definitions.first().find(".lr_dct_sf_h");
-
-
-                    mainPart.each(function(i, element) {
-                        
-                        var type = $(this).find('i').text(),
-                            selector = $(".lr_dct_sf_sens").eq(i).find("div[style='margin-left:20px'] > .PNlCoe");
-
-                        meaning[type] = [];
-
-                        selector.each(function(i, element) {
-                            var newDefinition = {},
-                                synonymsText,
-                                synonyms,
-                                example;
-
-                            newDefinition.definition = $(this).find("div[data-dobid='dfn']").text();
-                            example = $(this).find("span.vmod .vk_gy").text();
-                            synonymsText = $(this).find("div.vmod td.lr_dct_nyms_ttl + td > span:not([data-log-string='synonyms-more-click'])").text();
-
-                            synonyms = synonymsText.split(/,|;/).filter(synonym => synonym != ' ' && synonym).map(function(item) {
-                                return item.trim();
+                    $(e).children(".vmod").children(".vmod").each((index, e) => {
+                        let partOfSpeech,
+                            definitions = [];
+                
+                        partOfSpeech = $(e).find(".vpx4Fd").find(".pgRvse.vdBwhd i").text();
+                
+                        $(e).find("div > ol").first().children("li").each((index, e) => {
+                            let definition,
+                                example,
+                                synonyms = [],
+                
+                                PARENT_SELECTOR = '.thODed.Uekwlc.XpoqFe div[jsname="cJAsRb"] .QIclbb.XpoqFe';
+                
+                
+                            definition = $(e).find(`${PARENT_SELECTOR} div[data-dobid='dfn']`).text();
+                            example = $(e).find(`${PARENT_SELECTOR} .vk_gy`).text().slice(1, -1);
+                            
+                            $(e).find(`${PARENT_SELECTOR} > div.qFRZdb div.CqMNyc`).children("div[role='listitem']").each((index, e) => {
+                                let synonym;
+                
+                                synonym = $(e).find(".lLE0jd.gWUzU.F5z5N").text();
+                
+                                synonyms.push(synonym);
                             });
-
-                            if (example.length > 0)
-                                newDefinition.example = example.replace(/(^")|("$)/g, '');
-
-                            if (synonyms.length > 0)
-                                newDefinition.synonyms = synonyms;
-
-                            meaning[type].push(newDefinition);
+                
+                            definitions.push({
+                                definition,
+                                example,
+                                synonyms
+                            });
                         });
-
+                
+                        meanings.push({
+                            partOfSpeech,
+                            definitions
+                        });
                     });
 
-                dictionary.meaning = meaning;
-
-                Object.keys(dictionary).forEach(key => {
-                    (Array.isArray(dictionary[key]) && !dictionary[key].length) && delete dictionary[key];
+                    dictionary.push({
+                        word,
+                        phonetic,
+                        audio,
+                        origin,
+                        meanings
+                    });
                 });
+                
+                if (!VERSION || VERSION === 0) {
+                    dictionary = dictionary.map((entry) => {
+                        let { meanings, ...otherProps } = entry;
+
+                        meanings = meanings.reduce((meanings, meaning) => {
+                            let partOfSpeech, rest;
+
+                            ({partOfSpeech, ...rest} = meaning);
+                            meanings[partOfSpeech] = rest;
+
+                            return meanings;
+                        }, {});
+                    
+                        return { ...otherProps, meaning: meanings };
+                    });
+                }
 
                 res.header("Content-Type", 'application/json');
                 res.header("Access-Control-Allow-Origin", "*");
@@ -165,7 +183,7 @@ app.get("/", function(req, res) {
                         word = $(".hwg .hw")[i].childNodes[0].nodeValue,
                         phonetic = $(".pronSection.etym .pron .phoneticspelling")[i],
                         pronunciation = $(".pronSection.etym .pron .pronunciations")[i],
-                        origin = $(".pronSection.etym").eq(i).prev().find(".senseInnerWrapper p").text()
+                        origin = $(".pronSection.etym").eq(i).prev().find(".senseInnerWrapper p").text();
 
                     entry.word = word;
 
