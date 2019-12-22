@@ -46,7 +46,7 @@ Optionally you can also send another parameter `lang` equal to code of the langu
 Eg. `/?define=Bonjour&lang=fr`, will give you definition of **Bonjour** as present in French Dictionary.
 
 ```json
-{
+[{
   "word": "bonjour",
   "meaning": {
     "nom_masculin": [
@@ -58,7 +58,7 @@ Eg. `/?define=Bonjour&lang=fr`, will give you definition of **Bonjour** as prese
       }
     ]
   }
-}
+}]
 ```
 
 
