@@ -66,10 +66,11 @@ List of languages supported can be found [here](https://googledictionaryapi.eu-g
 
 ### Paths
 
-| Location | Endpoint | Status
-| :-- | :-- |
-| Root path | `https://googledictionaryapi.eu-gb.mybluemix.net`| Not Updated
-| Root path | `https://mydictionaryapi.appspot.com/`| Updated
+| Location | Endpoint | Status |
+| :-- | :-- | :-- |
+| Root path | `https://mydictionaryapi.appspot.com/`| Updated |
+| Root path | `https://googledictionaryapi.eu-gb.mybluemix.net`| Not Updated |
+
 
 ### HTTP request and query methods
 
