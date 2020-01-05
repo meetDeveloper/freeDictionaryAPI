@@ -82,7 +82,12 @@ app.get("/", function(req, res) {
                 
                 
                             definition = $(e).find(`${PARENT_SELECTOR} div[data-dobid='dfn']`).text();
-                            example = $(e).find(`${PARENT_SELECTOR} .vk_gy`).text().slice(1, -1);
+                            if (queriedLanguage !== 'fr') {
+                                example = $(e).find(`${PARENT_SELECTOR} .vk_gy`).text().slice(1, -1);
+                            } else {
+                                example = $(e).find(`${PARENT_SELECTOR} .vk_gy`).text();
+                            }
+                            
                             
                             $(e).find(`${PARENT_SELECTOR} > div.qFRZdb div.CqMNyc`).children("div[role='listitem']").each((index, e) => {
                                 let synonym;
