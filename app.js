@@ -80,9 +80,17 @@ app.get("/", function(req, res) {
                 
                                 PARENT_SELECTOR = '.thODed.Uekwlc.XpoqFe div[jsname="cJAsRb"] .QIclbb.XpoqFe';
                 
-                
                             definition = $(e).find(`${PARENT_SELECTOR} div[data-dobid='dfn']`).text();
-                            if (queriedLanguage !== 'fr') {
+                            
+                            
+                            if(queriedLanguage === 'hi') {
+                                let startOfExample  = definition.indexOf('(');
+                                let endOfExample    = definition.indexOf(')');
+                                
+                                example             = definition.slice(startOfExample + 1, endOfExample - 1);
+                                definition          = definition.slice(0, startOfExample - 1);
+                                
+                            } else if (queriedLanguage !== 'fr') {
                                 example = $(e).find(`${PARENT_SELECTOR} .vk_gy`).text().slice(1, -1);
                             } else {
                                 example = $(e).find(`${PARENT_SELECTOR} .vk_gy`).text();
