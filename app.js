@@ -87,8 +87,12 @@ app.get("/", function(req, res) {
                                 let startOfExample  = definition.indexOf('(');
                                 let endOfExample    = definition.indexOf(')');
                                 
-                                example             = definition.slice(startOfExample + 1, endOfExample - 1);
-                                definition          = definition.slice(0, startOfExample - 1);
+                                if(startOfExample !== -1) {
+                                    example             = definition.slice(startOfExample + 1, endOfExample - 1);
+                                    definition          = definition.slice(0, startOfExample - 1);
+                                } else {
+                                    example = $(e).find(`${PARENT_SELECTOR} .vk_gy`).text();
+                                }
                                 
                             } else if (queriedLanguage !== 'fr') {
                                 example = $(e).find(`${PARENT_SELECTOR} .vk_gy`).text().slice(1, -1);
