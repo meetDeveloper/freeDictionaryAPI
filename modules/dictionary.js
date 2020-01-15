@@ -198,8 +198,11 @@ function findNonEnglishDefinitions (word, language, callback) {
         
         
         			definition = $(e).find(`${PARENT_SELECTOR} div[data-dobid='dfn']`).text();
-        			example = $(e).find(`${PARENT_SELECTOR} .vk_gy`).text().slice(1, -1);
-        
+        			example = $(e).find(`${PARENT_SELECTOR} .vk_gy`).text();
+                    
+                    // In french language example are not wrapped around quotes.
+                    example[0] === '"' && (example = example.slice(1, -1));
+
         			$(e).find(`${PARENT_SELECTOR} > div.qFRZdb div.CqMNyc`).children("div[role='listitem']").each((index, e) => {
         				let synonym;
         
