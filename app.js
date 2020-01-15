@@ -7,14 +7,13 @@ const app = express();
 app.use(express.static('public'));
 
 app.get("/", function(req, res) {
-    
     const word = req.query.define,
         language = req.query.lang || 'en';
-        
+
     global.API_VERSION = (req.query.v && Number(req.query.v)) || 1;
-        
+
     if (!word) {
-       return res.sendFile(path.join(__dirname + '/views/index.html'));
+        return res.sendFile(path.join(__dirname + '/views/index.html'));
     }
 
     return dictionary.findDefinitions(word, language, (err, definitions) => {

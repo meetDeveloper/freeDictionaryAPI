@@ -1,12 +1,13 @@
 const request = require('request'),
     cheerio = require("cheerio"),
-    puppeteer = require("puppeteer");
+    jsdom = require("jsdom");
+
 
 function transformDictionary (dictionary, callback) {
     /* global API_VERSION */
-    if (API_VERSION !== 1) { return callback(undefined, dictionary); }
+    if (API_VERSION !== 1) { return dictionary; }
 
-    return callback(undefined, dictionary.map((entry) => {
+    return dictionary.map((entry) => {
     	let {
     		meanings,
     		...otherProps
@@ -28,7 +29,7 @@ function transformDictionary (dictionary, callback) {
     		...otherProps,
     		meaning: meanings
     	};
-    }));
+    });
 }
 
 function findEnglishDefinitions (word, callback) {
@@ -43,7 +44,7 @@ function findEnglishDefinitions (word, callback) {
     
     const URI = `https://www.lexico.com/en/definition/${word}`;
 
-    return giveDOM(word, URI, 'en', (err, body) => {
+    return giveBody(URI, (err, body) => {
         if (err) { return callback(err); }
         
         const $ = cheerio.load(body);
@@ -147,18 +148,14 @@ function findEnglishDefinitions (word, callback) {
     		(Array.isArray(dictionary[key]) && !dictionary[key].length) && delete dictionary[key];
     	});
     	
-    	return callback(undefined, dictionary);
+    	return callback(null, dictionary);
     });
 }
 
 function findNonEnglishDefinitions (word, language, callback) {
-    let URI = `https://www.google.com/search?q=dictionary&hl=${language}#dobs=${word}`;
+    let URI = `https://www.google.com/async/dictw?hl=${language}&async=term:${word},corpus:${language},hhdr:false,hwdgt:true,wfp:true,xpnd:true,ttl:,tsl:${language},_id:dictionary-modules,_pms:s,_jsfs:Ffpdje,_fmt:pc`;
     
-    if (language === 'fr') {
-        URI = `https://www.google.com/search?q=définir+${word}&hl=${language}`; 
-    }
-    
-    return giveDOM(word, URI, language, (err, body) => {
+    return giveBody(URI, { cleanBody: true }, (err, body) => {
         if (err) { return callback(err); }
 
         const $ = cheerio.load(body);
@@ -233,52 +230,77 @@ function findNonEnglishDefinitions (word, language, callback) {
         	});
         });
         
-        return transformDictionary(dictionary, callback);
+        return callback(null, transformDictionary(dictionary));
     });
 } 
 
 function findDefinitions (word, language, callback) {
-    if (language === 'en') { return findEnglishDefinitions(word, callback) }
+    if (language === 'en') { return findEnglishDefinitions(word, callback); }
     
     return findNonEnglishDefinitions(word, language, callback);
 }
 
 
-function giveDOM (word, url, language, callback) {
-    if (language === 'fr' || language === 'en') { return useHTTPResponse(url, callback); }
-    
-    return usePuppeteer(word, url).then((body) => {
-        return callback(undefined, body);
-    }, () =>{
-        return callback({
-        	statusCode: 500,
-        	title: 'Something Went Wrong.',
-        	message: 'Sorry pal, Our servers ran into some problem.',
-        	resolution: 'You can try the search again or head to the web instead.'
-        });
+function giveBody (url, options, callback) {
+    !callback && (callback = options) && (options = {});
+
+    return fetchData(url, function (err, body) {
+        if (err) { return callback(err) }
+        
+        try {
+            options.cleanBody && (body = cleanBody(body));
+        } catch (e) {
+            return callback({
+            	statusCode: 500,
+            	title: 'Something Went Wrong.',
+            	message: 'Sorry pal, Our servers ran into some problem.',
+            	resolution: 'You can try the search again or head to the web instead.'
+            });
+        }
+
+        return callback(null, body);
     });
 }
 
-async function usePuppeteer (word, url) {
-    const browser = await puppeteer.launch(),
-        page = await browser.newPage();
-        
-    await page.goto(url);
-    await page.waitForFunction((word) => { return document.querySelector('#dw-siw input').value === word; }, { timeout: 2000 }, word);
+function cleanBody (body) {
+    const { JSDOM } = jsdom;
 
-    let content = await page.content();
+    let c = '',
+        d = 0,
+        e = 0,
+        arr = [];
     
-    await browser.close();
-     
-    return content;
+    body = body.split('\n');
+    body.shift();
+    body = body.join('\n');
+
+    for (c = c ? c : c + body; c; ) {
+        d = 1 + c.indexOf(';');
+        
+        if (!d) { break; }
+        
+        e = d + parseInt(c, 16);
+        
+        arr.push(c.substring(d, e));
+        
+        c = c.substring(e);
+        d = 0;
+    }
+    
+    arr = arr.filter((e) => (e.indexOf('[') !== 0));
+
+    arr[1] = '<script>';
+    arr[arr.length] = '</script>';
+
+    return new JSDOM(arr.join(''), { runScripts: "dangerously" }).serialize();
 }
 
-function useHTTPResponse(url, callback) {
+function fetchData(url, callback) {
     request({
     	method: 'GET',
     	url: encodeURI(url),
     	headers: {
-    		"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0"
+    		"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36"
     	}
     }, (err, response, body) => {
     	if (err) {
@@ -290,7 +312,7 @@ function useHTTPResponse(url, callback) {
             });
     	}
 
-    	return callback (undefined, body);
+    	return callback (null, body);
     });
 }
 
