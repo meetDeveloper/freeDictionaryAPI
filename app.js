@@ -13,7 +13,8 @@ app.get("/", function(req, res) {
     global.API_VERSION = (req.query.v && Number(req.query.v)) || 1;
 
     if (!word) {
-        return res.sendFile(path.join(__dirname + '/views/index.html'));
+        return res.redirect(301, 'https://dictionaryapi.dev');
+        // return res.sendFile(path.join(__dirname + '/views/index.html'));
     }
 
     return dictionary.findDefinitions(word, language, (err, definitions) => {
