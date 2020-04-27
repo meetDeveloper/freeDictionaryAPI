@@ -8,9 +8,9 @@ Google does not provide API for Google Dictionary so I created one.
 
 The basic syntax of a URL request to the API is shown below:
 
-https://api.dictionaryapi.dev/api/v1/entries/<--language_code-->/<--word-->
+https://api.dictionaryapi.dev/api/<--version-->/entries/<--language_code-->/<--word-->
 
-As an example, to get definition of English word **hello**, you can send request to
+As an example, to get definition of English word **hello** using _v1_, you can send request to
 
 https://api.dictionaryapi.dev/api/v1/entries/en/hello, result returned will be,
 
@@ -46,29 +46,85 @@ https://api.dictionaryapi.dev/api/v1/entries/en/hello, result returned will be,
 ]
 ```
 
+instead, if you use _v2_, response will be formated in much better way 
+
+```json
+[
+    {
+        "word": "hello",
+        "phonetic": "/həˈlō/",
+        "origin": "Early 19th century variant of earlier hollo; related to holla.",
+        "meanings": [
+            {
+                "partOfSpeech": "exclamation",
+                "definitions": [
+                    {
+                        "definition": "Used as a greeting or to begin a telephone conversation.",
+                        "example": "hello there, Katie!"
+                    }
+                ]
+            },
+            {
+                "partOfSpeech": "noun",
+                "definitions": [
+                    {
+                        "definition": "An utterance of “hello”; a greeting.",
+                        "example": "she was getting polite nods and hellos from people",
+                        "synonyms": [
+                            "greeting",
+                            "welcome",
+                            "salutation",
+                            "saluting",
+                            "hailing",
+                            "address",
+                            "hello",
+                            "hallo"
+                        ]
+                    }
+                ]
+            },
+            {
+                "partOfSpeech": "intransitive verb",
+                "definitions": [
+                    {
+                        "definition": "Say or shout “hello”; greet someone.",
+                        "example": "I pressed the phone button and helloed"
+                    }
+                ]
+            }
+        ]
+    }
+]
+```
 ### Language support
 
 The API supports multiple language, you can query any language supported by sending its language code.
 
-For example you can get definition of French word **Bonjour** by sending request to,
+For example you can get definition of French word **Bonjour** in _v2_ format by sending request to,
 
-https://api.dictionaryapi.dev/api/v1/entries/fr/bonjour
+https://api.dictionaryapi.dev/api/v2/entries/fr/bonjour
 
 ```json
 [
-  {
-    "word": "bonjour",
-    "meaning": {
-      "nom_masculin": [
-        {
-          "definition": "Souhait de bonne journée (adressé en arrivant, en rencontrant).",
-          "synonyms": [
-            "salut"
-          ]
-        }
-      ]
+    {
+        "word": "bonjour",
+        "phonetic": "",
+        "origin": "",
+        "meanings": [
+            {
+                "partOfSpeech": "nom masculin",
+                "definitions": [
+                    {
+                        "definition": "Souhait de bonne journée (adressé en arrivant, en rencontrant).",
+                        "example": "",
+                        "synonyms": [
+                            "salut"
+                        ]
+                    }
+                ]
+            }
+        ]
     }
-  }
 ]
 ```
 
@@ -79,13 +135,13 @@ List of languages supported can be found [here](https://dictionaryapi.dev/langua
 
 | Location | Endpoint |
 | :-- | :-- |
-| Root path | `https://api.dictionaryapi.dev/`|
+| Root path | `https://api.dictionaryapi.dev/api/<--version-->`|
 
 ### HTTP request and query methods
 
 | Method | Endpoint | Description | Examples |
 | :-- | :-- | :-- | :-- |
-| `GET` | `/api/v1/entries/<LANGUAGE>/<YOUR_WORD>`| Retrieves the Google Dictionary definition of the given word that has been entered instead of `<YOUR_WORD>` in the [provided language](https://dictionaryapi.dev/languageCode.txt) `<LANGUAGE>`. | [`/api/v1/entries/fr/bonjour`](https://api.dictionaryapi.dev/api/v1/entries/fr/bonjour) |
+| `GET` | `/entries/<LANGUAGE>/<YOUR_WORD>`| Retrieves the Google Dictionary definition of the given word that has been entered instead of `<YOUR_WORD>` in the [provided language](https://dictionaryapi.dev/languageCode.txt) `<LANGUAGE>`. | [`/api/v2/entries/fr/bonjour`](https://api.dictionaryapi.dev/api/v2/entries/fr/bonjour) |
 
 ## Future plans  
 
