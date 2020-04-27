@@ -10,43 +10,9 @@ The basic syntax of a URL request to the API is shown below:
 
 https://api.dictionaryapi.dev/api/<--version-->/entries/<--language_code-->/<--word-->
 
-As an example, to get definition of English word **hello** using _v1_, you can send request to
+As an example, to get definition of English word **hello** using _v2_, you can send request to
 
-https://api.dictionaryapi.dev/api/v1/entries/en/hello, result returned will be,
-
-```json
-[
-  {
-    "word": "hello",
-    "phonetic": [
-      "həˈləʊ",
-      "hɛˈləʊ"
-    ],
-    "meaning": {
-      "exclamation": [
-        {
-          "definition": "used as a greeting or to begin a telephone conversation.",
-          "example": "hello there, Katie!"
-        }
-      ],
-      "noun": [
-        {
-          "definition": "an utterance of ‘hello’; a greeting.",
-          "example": "she was getting polite nods and hellos from people"
-        }
-      ],
-      "verb": [
-        {
-          "definition": "say or shout ‘hello’.",
-          "example": "I pressed the phone button and helloed"
-        }
-      ]
-    }
-  }
-]
-```
-
-instead, if you use _v2_, response will be formated in much better way 
+https://api.dictionaryapi.dev/api/v2/entries/en/hello, result returned will be,
 
 ```json
 [
@@ -96,6 +62,7 @@ instead, if you use _v2_, response will be formated in much better way
     }
 ]
 ```
+
 ### Language support
 
 The API supports multiple language, you can query any language supported by sending its language code.
@@ -130,6 +97,41 @@ https://api.dictionaryapi.dev/api/v2/entries/fr/bonjour
 
 
 List of languages supported can be found [here](https://dictionaryapi.dev/languageCode.txt) for your reference.
+
+### Regarding V1 Version
+The API earlier use to send response as shown below, but this structure of response was found out to be difficult to work with (you can take a look at these tickets [#32](https://github.com/meetDeveloper/googleDictionaryAPI/issues/32) and [#4](https://github.com/meetDeveloper/googleDictionaryAPI/issues/4)), based on feedback in these tickets I have updated the API to _v2_ version. _v2_ version is available for all languages supported. That said, _v1_ version will always be supported for backward compatibility.
+
+```json
+[
+  {
+    "word": "hello",
+    "phonetic": [
+      "həˈləʊ",
+      "hɛˈləʊ"
+    ],
+    "meaning": {
+      "exclamation": [
+        {
+          "definition": "used as a greeting or to begin a telephone conversation.",
+          "example": "hello there, Katie!"
+        }
+      ],
+      "noun": [
+        {
+          "definition": "an utterance of ‘hello’; a greeting.",
+          "example": "she was getting polite nods and hellos from people"
+        }
+      ],
+      "verb": [
+        {
+          "definition": "say or shout ‘hello’.",
+          "example": "I pressed the phone button and helloed"
+        }
+      ]
+    }
+  }
+]
+```
 
 ### Paths
 
