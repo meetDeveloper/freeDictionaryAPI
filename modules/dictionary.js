@@ -79,7 +79,7 @@ function findEnglishDefinitions (word, callback) {
     		var entry = {},
     			word = $(".hwg .hw")[i].childNodes[0].nodeValue,
     			phonetic = $(".pronSection.etym .pron .phoneticspelling")[i],
-    			pronunciation = $(".pronSection.etym .pron .pronunciations")[i],
+    			pronunciation = $(".pronSection.etym .pron .speaker")[i],
     			origin = $(".pronSection.etym").eq(i).prev().find(".senseInnerWrapper p").text();
     
     		entry.word = word;
