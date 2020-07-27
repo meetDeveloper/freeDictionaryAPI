@@ -79,7 +79,7 @@ function findEnglishDefinitions (word, callback) {
     		var entry = {},
     			word = $(".hwg .hw")[i].childNodes[0].nodeValue,
     			phonetic = $(".pronSection.etym .pron .phoneticspelling")[i],
-    			pronunciation = $(".pronSection.etym .pron .pronunciations")[i],
+    			pronunciation = $(".pronSection.etym .pron .speaker")[i],
     			origin = $(".pronSection.etym").eq(i).prev().find(".senseInnerWrapper p").text();
     
     		entry.word = word;
@@ -124,8 +124,9 @@ function findEnglishDefinitions (word, callback) {
     					if (definition.length > 0)
     						newDefinition.definition = definition;
     
-    					if (example.length > 0)
-    						newDefinition.example = example.substring(1, example.length - 1);
+						if (example.length > 0)
+						    // Remove line break and extra space
+    						newDefinition.example = example.substring(1, example.length - 1).replace(/(\r\n|\n|\r)/gm," ").trim();
     
     					if (synonyms.length > 0)
     						newDefinition.synonyms = synonyms;
@@ -197,9 +198,11 @@ function findNonEnglishDefinitions (word, language, callback) {
         				PARENT_SELECTOR = '.thODed.Uekwlc.XpoqFe div[jsname="cJAsRb"] .QIclbb.XpoqFe';
         
         
-        			definition = $(e).find(`${PARENT_SELECTOR} div[data-dobid='dfn']`).text();
-        			example = $(e).find(`${PARENT_SELECTOR} .vk_gy`).text();
-                    
+					definition = $(e).find(`${PARENT_SELECTOR} div[data-dobid='dfn']`).text();
+
+					// remove linebreak and extra spaces
+					example = $(e).find(`${PARENT_SELECTOR} .vk_gy`).text().replace(/(\r\n|\n|\r)/gm," ").trim();
+
                     // In french language example are not wrapped around quotes.
                     example[0] === '"' && (example = example.slice(1, -1));
 
