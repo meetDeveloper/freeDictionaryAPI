@@ -18,14 +18,22 @@ https://api.dictionaryapi.dev/api/v2/entries/en/hello, result returned will be,
 [
     {
         "word": "hello",
-        "phonetic": "/həˈlō/",
-        "origin": "Early 19th century variant of earlier hollo; related to holla.",
+        "phonetics": [
+            {
+                "text": "/həˈloʊ/",
+                "audio": "https://lex-audio.useremarkable.com/mp3/hello_us_1_rr.mp3"
+            },
+            {
+                "text": "/hɛˈloʊ/",
+                "audio": "https://lex-audio.useremarkable.com/mp3/hello_us_2_rr.mp3"
+            }
+        ],
         "meanings": [
             {
                 "partOfSpeech": "exclamation",
                 "definitions": [
                     {
-                        "definition": "Used as a greeting or to begin a telephone conversation.",
+                        "definition": "Used as a greeting or to begin a phone conversation.",
                         "example": "hello there, Katie!"
                     }
                 ]
@@ -75,18 +83,19 @@ https://api.dictionaryapi.dev/api/v2/entries/fr/bonjour
 [
     {
         "word": "bonjour",
-        "phonetic": "",
-        "origin": "",
+        "phonetics": [
+            {}
+        ],
         "meanings": [
             {
                 "partOfSpeech": "nom masculin",
                 "definitions": [
                     {
                         "definition": "Souhait de bonne journée (adressé en arrivant, en rencontrant).",
-                        "example": "",
                         "synonyms": [
                             "salut"
-                        ]
+                        ],
+                        "antonyms": []
                     }
                 ]
             }
@@ -103,33 +112,49 @@ The API earlier use to send response as shown below, but this structure of respo
 
 ```json
 [
-  {
-    "word": "hello",
-    "phonetic": [
-      "həˈləʊ",
-      "hɛˈləʊ"
-    ],
-    "meaning": {
-      "exclamation": [
-        {
-          "definition": "used as a greeting or to begin a telephone conversation.",
-          "example": "hello there, Katie!"
+    {
+        "word": "hello",
+        "phonetics": [
+            {
+                "text": "/həˈloʊ/",
+                "audio": "https://lex-audio.useremarkable.com/mp3/hello_us_1_rr.mp3"
+            },
+            {
+                "text": "/hɛˈloʊ/",
+                "audio": "https://lex-audio.useremarkable.com/mp3/hello_us_2_rr.mp3"
+            }
+        ],
+        "meaning": {
+            "exclamation": [
+                {
+                    "definition": "Used as a greeting or to begin a phone conversation.",
+                    "example": "hello there, Katie!"
+                }
+            ],
+            "noun": [
+                {
+                    "definition": "An utterance of “hello”; a greeting.",
+                    "example": "she was getting polite nods and hellos from people",
+                    "synonyms": [
+                        "greeting",
+                        "welcome",
+                        "salutation",
+                        "saluting",
+                        "hailing",
+                        "address",
+                        "hello",
+                        "hallo"
+                    ]
+                }
+            ],
+            "intransitive verb": [
+                {
+                    "definition": "Say or shout “hello”; greet someone.",
+                    "example": "I pressed the phone button and helloed"
+                }
+            ]
         }
-      ],
-      "noun": [
-        {
-          "definition": "an utterance of ‘hello’; a greeting.",
-          "example": "she was getting polite nods and hellos from people"
-        }
-      ],
-      "verb": [
-        {
-          "definition": "say or shout ‘hello’.",
-          "example": "I pressed the phone button and helloed"
-        }
-      ]
     }
-  }
 ]
 ```
 
