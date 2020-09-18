@@ -1,6 +1,6 @@
 # Google Dictionary API
 
-Google does not provide API for Google Dictionary so I created one.
+Google does not provide Google Dictionary API so I created one.
 
 ## Getting Started
 
