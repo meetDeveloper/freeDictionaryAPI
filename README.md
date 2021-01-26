@@ -12,7 +12,7 @@ https://api.dictionaryapi.dev/api/<--version-->/entries/<--language_code-->/<--w
 
 As an example, to get definition of English word **hello** using _v2_, you can send request to
 
-https://api.dictionaryapi.dev/api/v2/entries/en/hello, result returned will be,
+https://api.dictionaryapi.dev/api/v2/entries/en_US/hello, result returned will be,
 
 ```json
 [
