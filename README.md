@@ -175,9 +175,14 @@ The API earlier use to send response as shown below, but this structure of respo
 You can see existing and add new feature proposals on the projects GitHub page.
 Pull requests are welcome!
 
-## Support  
-
 If you need any assistance or find any bugs, feel free to contact me directly via [email](mailto:srjjain1996@gmail.com) or [create a new issue](https://github.com/meetDeveloper/googleDictionaryAPI/issues) on the GitHub page.
+
+## Support Us
+This Dictionary API was initially created as an API that could be used by my friend for his project. I did not in my wildest dream thought that this API will become so popular, in few months this API took off and many people started to use it, initially I was able to manage the server costs but as number of requests started increasing, so did the server costs. Currently API has more than 10 million requests per month and to keep it running I need support of the community. I have planned few things in near future that will bring the cost down, but that will take some time. 
+
+Kindly help me keep running and developing this API. Thanks a lot for using my API, it feels good when your creation help other create their own projects.
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/paytosuraj)
 
 ## Related Projects
 
