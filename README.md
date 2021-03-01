@@ -2,6 +2,12 @@
 
 Google does not provide Google Dictionary API so I created one.
 
+## Important Note
+The API usage has been increasing radidly, and I am unable to keep up with the AWS bills due to this.
+Kindly help me pay for the API so that I keep developing and able to give out this API for free.
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/paytosuraj)
+
 ## Getting Started
 
 ### Usage 
