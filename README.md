@@ -1,6 +1,6 @@
-# Google Dictionary API
+# Free Dictionary API
 
-Google does not provide Google Dictionary API so I created one.
+There was no Free Dictionary API on the web when I wanted one for my friend, so I created this.
 
 ## Important Note
 The API usage has been increasing radidly, and I am unable to keep up with the AWS bills due to this.
@@ -114,7 +114,7 @@ https://api.dictionaryapi.dev/api/v2/entries/fr/bonjour
 List of languages supported can be found [here](https://dictionaryapi.dev/languageCode.txt) for your reference.
 
 ### Regarding V1 Version
-The API earlier use to send response as shown below, but this structure of response was found out to be difficult to work with (you can take a look at these tickets [#32](https://github.com/meetDeveloper/googleDictionaryAPI/issues/32) and [#4](https://github.com/meetDeveloper/googleDictionaryAPI/issues/4)), based on feedback in these tickets I have updated the API to _v2_ version. _v2_ version is available for all languages supported. That said, _v1_ version will always be supported for backward compatibility.
+The API earlier use to send response as shown below, but this structure of response was found out to be difficult to work with (you can take a look at these tickets [#32](https://github.com/meetDeveloper/freeDictionaryAPI/issues/32) and [#4](https://github.com/meetDeveloper/freeDictionaryAPI/issues/4)), based on feedback in these tickets I have updated the API to _v2_ version. _v2_ version is available for all languages supported. That said, _v1_ version will always be supported for backward compatibility.
 
 ```json
 [
@@ -181,7 +181,7 @@ The API earlier use to send response as shown below, but this structure of respo
 You can see existing and add new feature proposals on the projects GitHub page.
 Pull requests are welcome!
 
-If you need any assistance or find any bugs, feel free to contact me directly via [email](mailto:srjjain1996@gmail.com) or [create a new issue](https://github.com/meetDeveloper/googleDictionaryAPI/issues) on the GitHub page.
+If you need any assistance or find any bugs, feel free to contact me directly via [email](mailto:srjjain1996@gmail.com) or [create a new issue](https://github.com/meetDeveloper/freeDictionaryAPI/issues) on the GitHub page.
 
 ## Support Us
 This Dictionary API was initially created as an API that could be used by my friend for his project. I did not in my wildest dream thought that this API will become so popular, in few months this API took off and many people started to use it, initially I was able to manage the server costs but as number of requests started increasing, so did the server costs. Currently API has more than 10 million requests per month and to keep it running I need support of the community. I have planned few things in near future that will bring the cost down, but that will take some time. 
