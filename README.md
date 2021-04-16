@@ -1,6 +1,6 @@
 # Free Dictionary API
 
-There was no Free Dictionary API on the web when I wanted one for my friend, so I created this.
+There was no free Dictionary API on the web when I wanted one for my friend, so I created one.
 
 ## Important Note
 The API usage has been increasing radidly, and I am unable to keep up with the AWS bills due to this.
