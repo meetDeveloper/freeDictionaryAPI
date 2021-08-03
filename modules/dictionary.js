@@ -44,7 +44,7 @@ function transformV2toV1 (data) {
     });
 }
 
-function transform (data) {
+function transform (data, { include }) {
 	return data
 	        .map(e => e.entry)
 	        .filter(e => e)
@@ -111,16 +111,27 @@ function transform (data) {
 						return {
 							partOfSpeech: _.get(parts_of_speech[0], 'value'),
 							definitions: senses.map((sense) => {							
-								let { definition = {}, example_groups = [], thesaurus_entries = [] } = sense;
+								let { definition = {}, example_groups = [], thesaurus_entries = [] } = sense,
+									result = {
+										definition: definition.text,
+										example: _.get(example_groups[0], 'examples.0'),
+										synonyms: _.get(thesaurus_entries[0], 'synonyms.0.nyms', [])
+											.map(e => e.nym),
+										antonyms: _.get(thesaurus_entries[0], 'antonyms.0.nyms', [])
+											.map(e => e.nym)
+									};
 
-								return {
-									definition: definition.text,
-									example: _.get(example_groups[0], 'examples.0'),
-									synonyms: _.get(thesaurus_entries[0], 'synonyms.0.nyms', [])
-										.map(e => e.nym),
-									antonyms: _.get(thesaurus_entries[0], 'antonyms.0.nyms', [])
-										.map(e => e.nym)
+								if (include.example) {
+									result.examples =  _.reduce(example_groups, (accumulator, example_group) => {
+										let example = _.get(example_group, 'examples', []);
+
+										accumulator = accumulator.concat(example);
+
+										return accumulator;
+									}, []);
 								}
+
+								return result;
 							})
 						};
 					})
@@ -176,7 +187,7 @@ async function fetchFromSource (word, language) {
 	return dictionaryData;
 }
 
-async function findDefinitions (word, language) {
+async function findDefinitions (word, language, { include }) {
 	if (language !== 'en') {
 		let dictionaryData = await fetchFromSource(word, language);
 
@@ -197,7 +208,7 @@ async function findDefinitions (word, language) {
 
 	if (_.isEmpty(dictionaryData)) { throw new errors.UnexpectedError(); }
 
-	return transform(dictionaryData);
+	return transform(dictionaryData, { include });
 }
 
 module.exports = {

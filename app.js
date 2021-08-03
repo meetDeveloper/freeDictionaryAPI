@@ -59,7 +59,11 @@ app.set('trust proxy', true);
 
 app.get('/api/:version/entries/:language/:word', async (req, res) => {
     let { word, language, version } = req.params,
-        include = _.get(req.query, 'include', '').split(',');
+        include = _.reduce(_.get(req.query, 'include', '').split(','), (accumulator, current) => {
+            accumulator[current] = true;
+
+            return accumulator;
+        }, {});
 
     word = decodeURIComponent(word);
 
