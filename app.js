@@ -2,6 +2,7 @@ const { JSDOM } = require('jsdom'),
     express = require('express'),
     app = express(),
 
+    utils = require('./modules/utils.js'),
     errors = require('./modules/errors.js'),
     dictionary = require('./modules/dictionary.js'),
 
@@ -71,15 +72,19 @@ app.get('/api/:version/entries/:language/:word', async (req, res) => {
         return handleError.call(res, new errors.NoDefinitionsFound()); 
     }
 
-    // By default we are assuming person means American English
-    // This is needed for backward compatibility.
-    word = word.trim();
+    // @todo: Find better error.
+    if (!utils.isVersionSupported(version)) { return handleError.call(res, new errors.NoDefinitionsFound()); }
 
     // Todo: Figure out better strategy.
-    if (language === 'en_US' || language === 'en_GB') {
-        language = 'en';
-        word = word.toLowerCase();
-    }
+    if (language === 'en_US' || language === 'en_GB') { language = 'en'; }
+
+    // By default we are assuming person means American English
+    // This is needed for backward compatibility.
+    language = language.toLowerCase();
+    word = word.trim().toLocaleLowerCase(language);
+
+    // @todo: Find better error.
+    if (!utils.isLanguageSupported(language)) { return handleError.call(res, new errors.NoDefinitionsFound()); }
 
     try {
         let definitions = await dictionary.findDefinitions(word, language, { include }),

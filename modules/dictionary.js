@@ -193,7 +193,7 @@ async function findDefinitions (word, language, { include }) {
 
 		if (_.isEmpty(dictionaryData)) { throw new errors.UnexpectedError(); }
 
-		return transform(dictionaryData);
+		return transform(dictionaryData, { include });
 	}
 
 	if (!ALL_ENGLISH_WORDS.has(word)) {
