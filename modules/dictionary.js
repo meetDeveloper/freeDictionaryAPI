@@ -88,7 +88,12 @@ function transform (data, { include }) {
 				return {
 					word: lemma || headword,
 					phonetic: _.get(phonetics, '0.text'),
-					phonetics: phonetics.map((e) => _.pick(e, ['text', 'oxford_audio'])),
+					phonetics: phonetics.map((e) => {
+						return {
+							text: e.text,
+							audio: e.oxford_audio
+						};
+					}),
 					origin: _.get(etymology, 'etymology.text'),
 					meanings: sense_families.map((sense_family) => {
 						let { parts_of_speech, senses = []} = sense_family;
