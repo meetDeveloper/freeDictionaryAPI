@@ -1,6 +1,6 @@
 const { JSDOM } = require('jsdom'),
     express = require('express'),
-    app = express(),
+    rateLimit = require("express-rate-limit"),
 
     utils = require('./modules/utils.js'),
     errors = require('./modules/errors.js'),
@@ -9,6 +9,12 @@ const { JSDOM } = require('jsdom'),
     // HTML Parser
     { DOMParser } = new JSDOM().window,
     parser = new DOMParser(),
+
+    app = express(),
+    limiter = rateLimit({
+        windowMs: 5 * 60 * 1000, // 5 minutes
+        max: 450 // limit each IP to 450 requests per windowMs
+    }),
 
     // Versions
     V1 = 'v1',
@@ -57,6 +63,8 @@ function handleError (error = {}) {
 };
 
 app.set('trust proxy', true);
+
+app.use(limiter);
 
 app.get('/api/:version/entries/:language/:word', async (req, res) => {
     let { word, language, version } = req.params,
