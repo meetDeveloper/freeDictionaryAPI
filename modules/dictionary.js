@@ -6,17 +6,7 @@ const fs = require('fs'),
 	utils = require('./utils.js'),
 	errors = require('./errors.js'),
 
-	httpsAgent = new https.Agent({ keepAlive: true }),
-
-	ROOT_ENGLISH_WORDS = fs.readFileSync('./meta/rootEnglishWords.txt').toString().split("\n").map((word) => {
-		return word.toLowerCase();
-	}),
-	DERIVED_ENGLISH_WORDS = fs.readFileSync('./meta/derivedEnglishWords.txt').toString().split("\n").map((word) => {
-		return word.toLowerCase();
-	}),
-
-	ALL_ENGLISH_WORDS = new Set([...ROOT_ENGLISH_WORDS, ...DERIVED_ENGLISH_WORDS]);
-
+	httpsAgent = new https.Agent({ keepAlive: true });
 
 function transformV2toV1 (data) {
 	return data.map((entry) => {
@@ -193,16 +183,6 @@ async function fetchFromSource (word, language) {
 }
 
 async function findDefinitions (word, language, { include }) {
-	if (language === 'en') {
-		if (!ALL_ENGLISH_WORDS.has(word)) {
-			throw new errors.NoDefinitionsFound({
-				word, 
-				language, 
-				reason: 'Word missing in dictionary.'
-			})
-		}
-	}
-
 	let dictionaryData = await fetchFromSource(word, language);
 
 	if (_.isEmpty(dictionaryData)) { throw new errors.UnexpectedError(); }
