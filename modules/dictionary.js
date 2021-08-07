@@ -44,7 +44,7 @@ function transformV2toV1 (data) {
     });
 }
 
-function transform (data, { include }) {
+function transform (word, language, data, { include }) {
 	return data
 	        .map(e => e.entry)
 	        .filter(e => e)
@@ -55,21 +55,21 @@ function transform (data, { include }) {
 					mappedSubentries;
 
 				if (subentries.length > 1) {
-					utils.logEvent(word, language, 'subentries length is greater than 1', { body });
+					utils.logEvent(word, language, 'subentries length is greater than 1', { data });
 				}
 
 				if (entry.sense_families) {
-					utils.logEvent(word, language, 'entry has subentries and sense families', { body });
+					utils.logEvent(word, language, 'entry has subentries and sense families', { data });
 				}
 
 				if (entry.etymology) {
-					utils.logEvent(word, language, 'entry has subentries and etymology', { body });
+					utils.logEvent(word, language, 'entry has subentries and etymology', { data });
 				}
 
 				mappedSubentries = subentries
 						.map((subentry) => {
 							if (subentry.sense_families) {
-								utils.logEvent(word, language, 'subentry has sense families', { body });
+								utils.logEvent(word, language, 'subentry has sense families', { data });
 							}
 
 							if (subentry.sense_family) {
@@ -105,12 +105,12 @@ function transform (data, { include }) {
 							parts_of_speech = _.get(senses[0], 'parts_of_speech', []);
 
 							if (senses.length > 1) {
-								utils.logEvent(word, language, 'part of speech missing but more than one sense present', { body });
+								utils.logEvent(word, language, 'part of speech missing but more than one sense present', { data });
 							}
 						}
 						
 						if (parts_of_speech.length > 1) {
-							utils.logEvent(word, language, 'more than one part of speech present', { body });
+							utils.logEvent(word, language, 'more than one part of speech present', { data });
 						}
 
 						return {
@@ -193,27 +193,21 @@ async function fetchFromSource (word, language) {
 }
 
 async function findDefinitions (word, language, { include }) {
-	if (language !== 'en') {
-		let dictionaryData = await fetchFromSource(word, language);
-
-		if (_.isEmpty(dictionaryData)) { throw new errors.UnexpectedError(); }
-
-		return transform(dictionaryData, { include });
-	}
-
-	if (!ALL_ENGLISH_WORDS.has(word)) {
-		throw new errors.NoDefinitionsFound({
-			word, 
-			language, 
-			reason: 'Word missing in dictionary.'
-		})
+	if (language === 'en') {
+		if (!ALL_ENGLISH_WORDS.has(word)) {
+			throw new errors.NoDefinitionsFound({
+				word, 
+				language, 
+				reason: 'Word missing in dictionary.'
+			})
+		}
 	}
 
 	let dictionaryData = await fetchFromSource(word, language);
 
 	if (_.isEmpty(dictionaryData)) { throw new errors.UnexpectedError(); }
 
-	return transform(dictionaryData, { include });
+	return transform(word, language, dictionaryData, { include });
 }
 
 module.exports = {
