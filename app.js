@@ -81,10 +81,11 @@ app.get('/api/:version/entries/:language/:word', async (req, res) => {
     // By default we are assuming person means American English
     // This is needed for backward compatibility.
     language = language.toLowerCase();
-    word = word.trim().toLocaleLowerCase(language);
 
     // @todo: Find better error.
     if (!utils.isLanguageSupported(language)) { return handleError.call(res, new errors.NoDefinitionsFound()); }
+
+    word = word.trim().toLocaleLowerCase(language);
 
     try {
         let definitions = await dictionary.findDefinitions(word, language, { include }),
