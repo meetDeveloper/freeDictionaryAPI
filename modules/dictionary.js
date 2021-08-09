@@ -16,13 +16,13 @@ function transformV2toV1 (data) {
     	} = entry;
     
     	meanings = meanings.reduce((meanings, meaning) => {
-    		let partOfSpeech, rest;
+    		let partOfSpeech, definitions;
     
     		({
     			partOfSpeech,
-    			...rest
+    			definitions
     		} = meaning);
-    		meanings[partOfSpeech] = rest;
+    		meanings[partOfSpeech] = definitions;
     
     		return meanings;
     	}, {});
