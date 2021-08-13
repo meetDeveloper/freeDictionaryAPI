@@ -14,11 +14,11 @@ Kindly help me pay for the API so that I keep developing and able to give out th
 
 The basic syntax of a URL request to the API is shown below:
 
-https://api.dictionaryapi.dev/api/<--version-->/entries/<--language_code-->/<--word-->
+https://api.dictionaryapi.dev/api/<--version-->/entries/en/<--word-->
 
 As an example, to get definition of English word **hello** using _v2_, you can send request to
 
-https://api.dictionaryapi.dev/api/v2/entries/en_US/hello, result returned will be,
+https://api.dictionaryapi.dev/api/v2/entries/en/hello, result returned will be,
 
 ```json
 [
@@ -77,44 +77,8 @@ https://api.dictionaryapi.dev/api/v2/entries/en_US/hello, result returned will b
 ]
 ```
 
-### Language support
-
-The API supports multiple language, you can query any language supported by sending its language code.
-
-For example you can get definition of French word **Bonjour** in _v2_ format by sending request to,
-
-https://api.dictionaryapi.dev/api/v2/entries/fr/bonjour
-
-```json
-[
-    {
-        "word": "bonjour",
-        "phonetics": [
-            {}
-        ],
-        "meanings": [
-            {
-                "partOfSpeech": "nom masculin",
-                "definitions": [
-                    {
-                        "definition": "Souhait de bonne journée (adressé en arrivant, en rencontrant).",
-                        "synonyms": [
-                            "salut"
-                        ],
-                        "antonyms": []
-                    }
-                ]
-            }
-        ]
-    }
-]
-```
-
-
-List of languages supported can be found [here](https://dictionaryapi.dev/languageCode.txt) for your reference.
-
 ### Regarding V1 Version
-The API earlier use to send response as shown below, but this structure of response was found out to be difficult to work with (you can take a look at these tickets [#32](https://github.com/meetDeveloper/freeDictionaryAPI/issues/32) and [#4](https://github.com/meetDeveloper/freeDictionaryAPI/issues/4)), based on feedback in these tickets I have updated the API to _v2_ version. _v2_ version is available for all languages supported. That said, _v1_ version will always be supported for backward compatibility.
+The API earlier use to send response as shown below, but this structure of response was found out to be difficult to work with (you can take a look at these tickets [#32](https://github.com/meetDeveloper/freeDictionaryAPI/issues/32) and [#4](https://github.com/meetDeveloper/freeDictionaryAPI/issues/4)), based on feedback in these tickets I have updated the API to _v2_ version. That said, _v1_ version will always be supported for backward compatibility.
 
 ```json
 [
@@ -174,7 +138,7 @@ The API earlier use to send response as shown below, but this structure of respo
 
 | Method | Endpoint | Description | Examples |
 | :-- | :-- | :-- | :-- |
-| `GET` | `/entries/<LANGUAGE>/<YOUR_WORD>`| Retrieves the Google Dictionary definition of the given word that has been entered instead of `<YOUR_WORD>` in the [provided language](https://dictionaryapi.dev/languageCode.txt) `<LANGUAGE>`. | [`/api/v2/entries/fr/bonjour`](https://api.dictionaryapi.dev/api/v2/entries/fr/bonjour) |
+| `GET` | `/entries/en/<YOUR_WORD>`| Retrieves the definition of the given word. | [`/api/v2/entries/en/bliss`](https://api.dictionaryapi.dev/api/v2/entries/en/bliss) |
 
 ## Future plans  
 
