@@ -6,7 +6,7 @@ There was no free Dictionary API on the web when I wanted one for my friend, so 
 The API usage has been increasing radidly, and I am unable to keep up with the AWS bills due to this.
 Kindly help me pay for the API so that I keep developing and able to give out this API for free.
 
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/paytosuraj)
+<a href="https://www.buymeacoffee.com/meetDeveloper"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=meetDeveloper&button_colour=5F7FFF&font_colour=ffffff&font_family=Inter&outline_colour=000000&coffee_colour=FFDD00"></a>
 
 ## Getting Started
 
@@ -152,7 +152,7 @@ This Dictionary API was initially created as an API that could be used by my fri
 
 Kindly help me keep running and developing this API. Thanks a lot for using my API, it feels good when your creation help other create their own projects.
 
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/paytosuraj)
+<a href="https://www.buymeacoffee.com/meetDeveloper"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=meetDeveloper&button_colour=5F7FFF&font_colour=ffffff&font_family=Inter&outline_colour=000000&coffee_colour=FFDD00"></a>
 
 ## Related Projects
 
