@@ -3,8 +3,9 @@
 There was no free Dictionary API on the web when I wanted one for my friend, so I created one.
 
 ## Important Note
-The API usage has been increasing radidly, and I am unable to keep up with the AWS bills due to this.
-Kindly help me pay for the API so that I keep developing and able to give out this API for free.
+The API usage has been ramping up radidly making it difficult for me to keep the server running due to increased AWS costs.
+
+Your support directly helps the development of Dictionary API and keeps the server running.
 
 <a href="https://www.buymeacoffee.com/meetDeveloper"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=meetDeveloper&button_colour=5F7FFF&font_colour=ffffff&font_family=Inter&outline_colour=000000&coffee_colour=FFDD00"></a>
 
