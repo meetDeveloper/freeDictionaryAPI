@@ -7,7 +7,7 @@ The API usage has been ramping up radidly making it difficult for me to keep the
 
 Your support directly helps the development of Dictionary API and keeps the server running.
 
-<a href="https://www.buymeacoffee.com/meetDeveloper"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=meetDeveloper&button_colour=5F7FFF&font_colour=ffffff&font_family=Inter&outline_colour=000000&coffee_colour=FFDD00"></a>
+<a href="https://www.buymeacoffee.com/meetdeveloper"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=meetdeveloper&button_colour=5F7FFF&font_colour=ffffff&font_family=Poppins&outline_colour=000000&coffee_colour=FFDD00"></a>
 
 ## Getting Started
 
@@ -153,7 +153,7 @@ This Dictionary API was initially created as an API that could be used by my fri
 
 Kindly help me keep running and developing this API. Thanks a lot for using my API, it feels good when your creation help other create their own projects.
 
-<a href="https://www.buymeacoffee.com/meetDeveloper"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=meetDeveloper&button_colour=5F7FFF&font_colour=ffffff&font_family=Inter&outline_colour=000000&coffee_colour=FFDD00"></a>
+<a href="https://www.buymeacoffee.com/meetdeveloper"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=meetdeveloper&button_colour=5F7FFF&font_colour=ffffff&font_family=Poppins&outline_colour=000000&coffee_colour=FFDD00"></a>
 
 ## Related Projects
 
