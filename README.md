@@ -78,6 +78,92 @@ https://api.dictionaryapi.dev/api/v2/entries/en/hello, result returned will be,
 ]
 ```
 
+There is also the option of adding multiple words in a single request by separating them with commas
+The following example request https://api.dictionaryapi.dev/api/v2/entries/en/banana,orange would return the following
+```json
+[
+	{
+		"word": "banana",
+		"phonetic": "bəˈnɑːnə",
+		"phonetics": [
+			{
+				"text": "bəˈnɑːnə",
+				"audio": "//ssl.gstatic.com/dictionary/static/sounds/20200429/banana--_gb_1.mp3"
+			}
+		],
+		"origin": "late 16th century: via Portuguese or Spanish from Mande.",
+		"meaning": {
+			"noun": [
+				{
+					"definition": "a long curved fruit which grows in clusters and has soft pulpy flesh and yellow skin when ripe.",
+					"example": "a bunch of bananas",
+					"synonyms": [],
+					"antonyms": []
+				},
+				{
+					"definition": "the tropical and subtropical palmlike plant that bears bananas, having very large leaves but lacking a woody trunk.",
+					"synonyms": [],
+					"antonyms": []
+				}
+			],
+			"adjective": [
+				{
+					"definition": "insane or extremely silly.",
+					"example": "I've spent two months in a studio—I must be bananas",
+					"synonyms": [],
+					"antonyms": []
+				}
+			]
+		}
+	},
+	{
+		"word": "orange",
+		"phonetic": "ˈɒrɪn(d)ʒ",
+		"phonetics": [
+			{
+				"text": "ˈɒrɪn(d)ʒ",
+				"audio": "//ssl.gstatic.com/dictionary/static/sounds/20200429/orange--_gb_1.mp3"
+			}
+		],
+		"origin": "late Middle English: from Old French orenge (in the phrase pomme d'orenge ), based on Arabic nāranj, from Persian nārang .",
+		"meaning": {
+			"noun": [
+				{
+					"definition": "a large round juicy citrus fruit with a tough bright reddish-yellow rind.",
+					"example": "eat plenty of oranges",
+					"synonyms": [],
+					"antonyms": []
+				},
+				{
+					"definition": "the leathery-leaved evergreen tree that bears the orange, native to warm regions of South and SE Asia. Oranges are a major commercial crop in many warm regions of the world.",
+					"synonyms": [],
+					"antonyms": []
+				},
+				{
+					"definition": "a bright reddish-yellow colour like that of the skin of a ripe orange.",
+					"example": "tones of golden brown and orange",
+					"synonyms": [],
+					"antonyms": []
+				},
+				{
+					"definition": "a butterfly with mainly or partly orange wings.",
+					"synonyms": [],
+					"antonyms": []
+				}
+			],
+			"adjective": [
+				{
+					"definition": "reddish yellow.",
+					"example": "there was an orange glow in the sky",
+					"synonyms": [],
+					"antonyms": []
+				}
+			]
+		}
+	}
+]
+```
+
 ### Regarding V1 Version
 The API earlier use to send response as shown below, but this structure of response was found out to be difficult to work with (you can take a look at these tickets [#32](https://github.com/meetDeveloper/freeDictionaryAPI/issues/32) and [#4](https://github.com/meetDeveloper/freeDictionaryAPI/issues/4)), based on feedback in these tickets I have updated the API to _v2_ version. That said, _v1_ version will always be supported for backward compatibility.
 
