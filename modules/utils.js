@@ -10,7 +10,7 @@ const // Versions
     SUPPORTED_LANGUAGES = new Set([
         'hi', 	 // Hindi
         'en',    // English (US)
-        'en-uk', // English (UK)
+        'en_GB', // English (UK)
         'es', 	 // Spanish
         'fr',	 // French
         'ja',    // Japanese
