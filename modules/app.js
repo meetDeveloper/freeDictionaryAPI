@@ -96,6 +96,7 @@ router.get('/api/:version/entries/:language/:word', async (req, res) => {
     word = decodeURIComponent(word);
 
     if (!word || !language || !version) {
+        console.log(`Word: ${word} | Language: ${language} | Version: ${version} is blank or undefined`);
         return handleError.call(res, new errors.NoDefinitionsFound());
     }
 
@@ -123,7 +124,7 @@ router.get('/api/:version/entries/:language/:word', async (req, res) => {
             definitions = dictionary.transformV2toV1(definitions);
         }
 
-        console.log(`definitions response: ${JSON.stringify(definitions)}`)
+        console.log(`definitions response: ${JSON.stringify(definitions)}`);
         body = JSON.stringify(definitions, (key, value) => {
             if (typeof value === 'object') { return value; }
 
@@ -136,6 +137,7 @@ router.get('/api/:version/entries/:language/:word', async (req, res) => {
 
         return res.status(status).send(body);
     } catch (error) {
+        console.log(`Error finding definition for ${word}; Error message: ${error}`);
         return handleError.call(res, error);
     }
 });
