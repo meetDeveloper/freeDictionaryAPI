@@ -123,6 +123,7 @@ router.get('/api/:version/entries/:language/:word', async (req, res) => {
             definitions = dictionary.transformV2toV1(definitions);
         }
 
+        console.log(`definitions response: ${JSON.stringify(definitions)}`)
         body = JSON.stringify(definitions, (key, value) => {
             if (typeof value === 'object') { return value; }
 
