@@ -5,9 +5,16 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "netlify dev"
   },
-  "author": "Suraj Jain",
+  "author": {
+    "name": "Suraj Jain"
+  },
+  "contributors": [
+    {
+      "name": "Saideep Dicholkar"
+    }
+  ],
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
@@ -15,6 +22,7 @@
     "jsdom": "^15.2.1",
     "lodash": "^4.17.20",
     "node-fetch": "^2.6.0",
-    "serialize-error": "^7.0.1"
+    "serialize-error": "^7.0.1",
+    "serverless-http": "^2.7.0"
   }
 }
