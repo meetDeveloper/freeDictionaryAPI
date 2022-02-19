@@ -1,19 +1,28 @@
 const { JSDOM } = require('jsdom'),
     express = require('express'),
     rateLimit = require("express-rate-limit"),
+    serverless = require('serverless-http'),
+    router = express.Router(),
+    PORT = process.env.port || 3000,
 
-    utils = require('./modules/utils.js'),
-    errors = require('./modules/errors.js'),
-    dictionary = require('./modules/dictionary.js'),
+    utils = require('./utils.js'),
+    errors = require('./errors.js'),
+    dictionary = require('./dictionary.js'),
 
     // HTML Parser
     { DOMParser } = new JSDOM().window,
     parser = new DOMParser(),
 
     app = express(),
+
+
+    keyGenerator = function (req, res) {
+        return req.headers['publicIp'] || req.headers['ip'] || req.headers['client-ip'];
+    };
     limiter = rateLimit({
         windowMs: 5 * 60 * 1000, // 5 minutes
-        max: 450 // limit each IP to 450 requests per windowMs
+        max: 450, // limit each IP to 450 requests per windowMs
+        keyGenerator: keyGenerator
     }),
 
     // Versions
@@ -30,11 +39,12 @@ const { JSDOM } = require('jsdom'),
     // Headers
     HEADER_CONTENT_TYPE = 'Content-Type',
     HEADER_ACCESS_CONTROL_ALLOW_ORIGIN = 'Access-Control-Allow-Origin';
+    HEADER_X_POWERED_BY = 'X-Powered-By';
 
 // GLOBALS
 global._ = require('lodash');
 
-function cleanText (text) {
+function cleanText(text) {
     if (!text) { return text; }
 
     return parser
@@ -43,13 +53,13 @@ function cleanText (text) {
 }
 
 
-function handleError (error = {}) {
+function handleError(error = {}) {
     // Using duck typing to know if we explicitly threw this error
     // If not then wrapping original error into UnexpectedError
     if (!error.requestType) { error = new errors.UnexpectedError({ original_error: error }); }
 
     const { requestType, title, message, resolution } = error;
-        status = REQUEST_TYPE_STATUS_CODE[requestType],
+    status = REQUEST_TYPE_STATUS_CODE[requestType],
         body = JSON.stringify({
             title,
             message,
@@ -58,6 +68,7 @@ function handleError (error = {}) {
 
     this.set(HEADER_CONTENT_TYPE, 'application/json');
     this.set(HEADER_ACCESS_CONTROL_ALLOW_ORIGIN, '*');
+    this.set(HEADER_X_POWERED_BY, 'Efforts, Sweat, Dedication, Desire and Open Source');
 
     return this.status(status).send(body);
 };
@@ -66,7 +77,15 @@ app.set('trust proxy', true);
 
 app.use(limiter);
 
-app.get('/api/:version/entries/:language/:word', async (req, res) => {
+app.use('/', router);
+
+router.get('/api', (req, res) => {
+    res.set(HEADER_X_POWERED_BY, "Efforts, Sweat, Dedication and Desire");
+    res.json({ message: "Hello from Dictionary API" });
+});
+
+router.get('/api/:version/entries/:language/:word', async (req, res) => {
+    console.log('Reached in api route')
     let { word, language, version } = req.params,
         include = _.reduce(_.get(req.query, 'include', '').split(','), (accumulator, current) => {
             accumulator[current] = true;
@@ -77,7 +96,7 @@ app.get('/api/:version/entries/:language/:word', async (req, res) => {
     word = decodeURIComponent(word);
 
     if (!word || !language || !version) {
-        return handleError.call(res, new errors.NoDefinitionsFound()); 
+        return handleError.call(res, new errors.NoDefinitionsFound());
     }
 
     // @todo: Find better error.
@@ -112,6 +131,7 @@ app.get('/api/:version/entries/:language/:word', async (req, res) => {
 
         res.set(HEADER_CONTENT_TYPE, 'application/json');
         res.set(HEADER_ACCESS_CONTROL_ALLOW_ORIGIN, '*');
+        res.set(HEADER_X_POWERED_BY, 'Efforts, Sweat, Dedication, Desire and Open Source');
 
         return res.status(status).send(body);
     } catch (error) {
@@ -119,4 +139,6 @@ app.get('/api/:version/entries/:language/:word', async (req, res) => {
     }
 });
 
-app.listen(3000, () => console.log('Server running on port 3000'));
+// app.listen(3000, () => console.log('Server running on port 3000'));
+
+module.exports.handler = serverless(app);
