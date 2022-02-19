@@ -142,7 +142,7 @@ async function queryInternet (word, language) {
 	url.searchParams.set('async', `term:${encodeURIComponent(word)},corpus:${language},hhdr:true,hwdgt:true,wfp:true,ttl:,tsl:,ptl:`);
 
 	url = url.toString();
-
+	console.log(`Generated URL: ${url}`);
 	let response = await fetch(url, {
 		agent: httpsAgent,
 		headers: new fetch.Headers({
