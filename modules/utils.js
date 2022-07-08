@@ -21,7 +21,7 @@ const // Versions
         'de', 	 // German
         'it', 	 // Italian
         'ko',	 // Korean
-        'pt-BR', // Brazilian Portuguese
+        'pt-br', // Brazilian Portuguese
         'ar',    // Arabic
         'tr'     // Turkish
     ]);
