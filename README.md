@@ -3,7 +3,7 @@
 There was no free Dictionary API on the web when I wanted one for my friend, so I created one.
 
 ## Important Note
-The API usage has been ramping up radidly making it difficult for me to keep the server running due to increased AWS costs.
+The API usage has been ramping up rapidly making it difficult for me to keep the server running due to increased AWS costs.
 
 Your support directly helps the development of Dictionary API and keeps the server running.
 
