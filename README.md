@@ -3,7 +3,7 @@
 There was no free Dictionary API on the web when I wanted one for my friend, so I created one.
 
 ## Important Note
-The API usage has been ramping up radidly making it difficult for me to keep the server running due to increased AWS costs.
+The API usage has been ramping up rapidly, making it difficult for me to keep the server running due to increased AWS costs.
 
 Your support directly helps the development of Dictionary API and keeps the server running.
 
@@ -15,11 +15,11 @@ Your support directly helps the development of Dictionary API and keeps the serv
 
 The basic syntax of a URL request to the API is shown below:
 
-https://api.dictionaryapi.dev/api/<--version-->/entries/en/<--word-->
+`https://api.dictionaryapi.dev/api/<--version-->/entries/en/<--word-->`
 
 As an example, to get definition of English word **hello** using _v2_, you can send request to
 
-https://api.dictionaryapi.dev/api/v2/entries/en/hello, result returned will be,
+`https://api.dictionaryapi.dev/api/v2/entries/en/hello` and the result returned will be:
 
 ```json
 [
@@ -76,7 +76,7 @@ https://api.dictionaryapi.dev/api/v2/entries/en/hello, result returned will be,
 ```
 
 ### Regarding V1 Version
-The API earlier use to send response as shown below, but this structure of response was found out to be difficult to work with (you can take a look at these tickets [#32](https://github.com/meetDeveloper/freeDictionaryAPI/issues/32) and [#4](https://github.com/meetDeveloper/freeDictionaryAPI/issues/4)), based on feedback in these tickets I have updated the API to _v2_ version. That said, _v1_ version will always be supported for backward compatibility.
+The API earlier used to send response as shown below, but this structure of response was found out to be difficult to work with (you can take a look at these tickets [#32](https://github.com/meetDeveloper/freeDictionaryAPI/issues/32) and [#4](https://github.com/meetDeveloper/freeDictionaryAPI/issues/4)), based on feedback in these tickets I have updated the API to _v2_ version. But _v1_ version will always be supported for backward compatibility.
 
 ```json
 [
