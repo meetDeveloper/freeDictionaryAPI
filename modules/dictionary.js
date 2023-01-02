@@ -142,7 +142,7 @@ async function queryInternet (word, language) {
 	url.searchParams.set('async', `term:${encodeURIComponent(word)},corpus:${language},hhdr:true,hwdgt:true,wfp:true,ttl:,tsl:,ptl:`);
 
 	url = url.toString();
-
+	console.log(`Generated URL: ${url}`);
 	let response = await fetch(url, {
 		agent: httpsAgent,
 		headers: new fetch.Headers({
@@ -152,7 +152,7 @@ async function queryInternet (word, language) {
 			"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
 		})
 	});
-
+	console.log(`Response: ${JSON.stringify(response)}; Response Status: ${response.status}`);
 	if (response.status === 404) { throw new errors.NoDefinitionsFound({ reason: 'Website returned 404.'}); }
 
 	if (response.status === 429) { throw new errors.RateLimitError(); }
