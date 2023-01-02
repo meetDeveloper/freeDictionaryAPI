@@ -20,6 +20,9 @@ const { JSDOM } = require('jsdom'),
     V1 = 'v1',
     V2 = 'v2',
 
+    //Word separator
+    wordSplitCharacter = ",",
+
     // Status Codes
     REQUEST_TYPE_STATUS_CODE = {
         notFound: 404,
@@ -66,17 +69,17 @@ app.set('trust proxy', true);
 
 app.use(limiter);
 
-app.get('/api/:version/entries/:language/:word', async (req, res) => {
-    let { word, language, version } = req.params,
+app.get('/api/:version/entries/:language/:words', async (req, res) => {
+    let { words, language, version } = req.params,
         include = _.reduce(_.get(req.query, 'include', '').split(','), (accumulator, current) => {
             accumulator[current] = true;
 
             return accumulator;
         }, {});
 
-    word = decodeURIComponent(word);
+    words = decodeURIComponent(words);
 
-    if (!word || !language || !version) {
+    if (!words || !language || !version) {
         return handleError.call(res, new errors.NoDefinitionsFound()); 
     }
 
@@ -93,18 +96,23 @@ app.get('/api/:version/entries/:language/:word', async (req, res) => {
     // @todo: Find better error.
     if (!utils.isLanguageSupported(language)) { return handleError.call(res, new errors.NoDefinitionsFound()); }
 
-    word = word.trim().toLocaleLowerCase(language);
-
+    words = words.trim().toLocaleLowerCase(language);
+    let wordList = words.split(wordSplitCharacter);
+    
     try {
-        let definitions = await dictionary.findDefinitions(word, language, { include }),
-            status = 200,
-            body;
+        let wordsDefinitions = [];
 
-        if (version === V1) {
-            definitions = dictionary.transformV2toV1(definitions);
-        }
+        await Promise.all(wordList.map(async (word) => {
+            let definitions = await dictionary.findDefinitions(word, language, { include })
 
-        body = JSON.stringify(definitions, (key, value) => {
+            if (version === V1) {
+                definitions = dictionary.transformV2toV1(definitions);
+            }
+
+            wordsDefinitions.push(definitions[0]);
+        }));
+
+        let body = JSON.stringify(wordsDefinitions, (key, value) => {
             if (typeof value === 'object') { return value; }
 
             return cleanText(value);
@@ -113,6 +121,7 @@ app.get('/api/:version/entries/:language/:word', async (req, res) => {
         res.set(HEADER_CONTENT_TYPE, 'application/json');
         res.set(HEADER_ACCESS_CONTROL_ALLOW_ORIGIN, '*');
 
+        let status = 200;
         return res.status(status).send(body);
     } catch (error) {
         return handleError.call(res, error);
