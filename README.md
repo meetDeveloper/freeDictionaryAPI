@@ -159,3 +159,9 @@ Now you never have to leave what you are reading to search for the meaning of th
 
 Extension is available for [Google Chrome](https://chrome.google.com/webstore/detail/dictionary-anywhere/hcepmnlphdfefjddkgkblcjkbpbpemac/) and [Mozilla Firefox](https://addons.mozilla.org/en-US/firefox/addon/dictionary-anyvhere).
 ##### Enjoy Reading Uninterrupted!!!
+
+### [WordDefiner English Dictionary](https://github.com/ritwiktakkar/WordDefiner)
+
+WordDefiner is an online English dictionary app for iPhone and iPad. It returns the phonetic transcription, pronunciation audio, and meanings based on part of speech for words you look up. The dark, minimalistic design language isn't all that's easy on the eyes: WordDefiner also lacks unnecessary account creation, distracting banners, and annoying ads. Get in and out of your dictionary app in no time with WordDefiner.
+
+See it on the [App Store](https://apps.apple.com/app/worddefiner-english-dictionary/id1637774027) for your Apple devices.
