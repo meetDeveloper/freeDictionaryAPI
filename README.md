@@ -158,4 +158,9 @@ Double-clicking any word will view its definition in a small pop-up bubble.
 Now you never have to leave what you are reading to search for the meaning of the words you don't yet know.
 
 Extension is available for [Google Chrome](https://chrome.google.com/webstore/detail/dictionary-anywhere/hcepmnlphdfefjddkgkblcjkbpbpemac/) and [Mozilla Firefox](https://addons.mozilla.org/en-US/firefox/addon/dictionary-anyvhere).
+
+### [PythonDictionary](https://github.com/Vishnunkumar/PythonDictionary/)
+
+Python wrapper over the incredible Free Dictionary API. It is a simple Python library that can be integrated into any text analytics module. 
+
 ##### Enjoy Reading Uninterrupted!!!
